@@ -64,19 +64,19 @@
 
     <div class="bg-surface-container-lowest rounded-3xl shadow-sm border border-outline-variant/30 overflow-hidden">
         <div class="p-6 border-b border-outline-variant/30 bg-surface-container-lowest flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <form action="{{ route('pengurus.status-pembayaran.index') }}" method="GET" class="flex flex-wrap md:flex-nowrap gap-3 w-full">
-                <div class="flex-1 min-w-[200px]">
+            <form action="{{ route('pengurus.status-pembayaran.index') }}" method="GET" class="flex flex-nowrap gap-3 w-full overflow-x-auto pb-2 custom-scrollbar">
+                <div class="w-full md:w-48 shrink-0">
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama..." class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
                 </div>
-                <div class="w-full md:w-auto">
-                    <select name="role" class="w-full md:w-auto rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
+                <div class="w-full md:w-auto shrink-0">
+                    <select name="role" class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
                         <option value="">Semua Role (Pengurus & Bendahara)</option>
                         <option value="pengurus" {{ request('role') == 'pengurus' ? 'selected' : '' }}>Pengurus</option>
                         <option value="bendahara" {{ request('role') == 'bendahara' ? 'selected' : '' }}>Bendahara</option>
                     </select>
                 </div>
-                <div class="w-full md:w-auto">
-                    <select name="status" class="w-full md:w-auto rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
+                <div class="w-full md:w-auto shrink-0">
+                    <select name="status" class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
                         <option value="">Semua Status</option>
                         <option value="Lunas" {{ request('status') == 'Lunas' ? 'selected' : '' }}>Lunas</option>
                         <option value="Menunggu Verifikasi" {{ request('status') == 'Menunggu Verifikasi' ? 'selected' : '' }}>Menunggu Verifikasi</option>
@@ -84,21 +84,21 @@
                         <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
                     </select>
                 </div>
-                <div class="w-full md:w-auto">
-                    <select name="bulan" class="w-full md:w-auto rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
+                <div class="w-full md:w-auto shrink-0">
+                    <select name="bulan" class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
                         <option value="">Semua Bulan</option>
                         @for($i = 1; $i <= 12; $i++)
                             <option value="{{ $i }}" {{ request('bulan') == $i ? 'selected' : '' }}>Bulan {{ $i }}</option>
                         @endfor
                     </select>
                 </div>
-                <div class="w-full md:w-auto">
+                <div class="w-full md:w-auto shrink-0">
                     <input type="number" name="tahun" value="{{ request('tahun') }}" placeholder="Tahun" class="w-full md:w-24 rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
                 </div>
-                <div class="w-full md:w-auto flex items-end">
+                <div class="w-full md:w-auto flex items-end shrink-0">
                     <button type="submit" class="w-full bg-surface-container border border-outline-variant/40 px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-surface-container-high transition">Filter</button>
                 </div>
-                <div class="w-full md:w-auto flex items-end">
+                <div class="w-full md:w-auto flex items-end shrink-0">
                     <a href="{{ route('pengurus.status-pembayaran.index') }}" class="w-full text-center text-primary bg-primary-container/30 border border-primary/20 px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-primary-container/50 transition">Reset</a>
                 </div>
             </form>

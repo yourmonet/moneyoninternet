@@ -9,37 +9,29 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <script>
     tailwind.config = {
+        darkMode: "class",
         theme: {
             extend: {
                 colors: {
-                    primary: "#006492",
-                    "primary-container": "#cae6ff",
-                    "on-primary-container": "#001e2f",
-                    secondary: "#50606e",
-                    "secondary-container": "#d3e5f5",
-                    "on-secondary-container": "#0b1d29",
-                    surface: "#f7f9fc",
-                    "surface-container": "#e1e7ec",
-                    "surface-container-low": "#f1f4f9",
-                    "surface-container-lowest": "#ffffff",
-                    "surface-container-high": "#cbe0f1",
-                    "on-surface": "#191c1e",
-                    "on-surface-variant": "#42474e",
-                    outline: "#72777f",
-                    "outline-variant": "#c2c7cf",
-                    error: "#ba1a1a",
-                    "error-container": "#ffdad6",
-                    "on-error-container": "#410002",
-                    success: "#146c2e",
-                    "success-container": "#a0f5a7",
-                    "on-success-container": "#002106"
+                    "secondary": "#4c5d8d", "tertiary": "#7b2600", "outline-variant": "#c3c6d6",
+                    "surface-container-low": "#f3f4f6", "outline": "#737685", "on-primary": "#ffffff",
+                    "secondary-fixed": "#dae2ff", "inverse-surface": "#2e3132", "inverse-primary": "#b2c5ff",
+                    "secondary-fixed-dim": "#b4c5fb", "on-secondary-fixed-variant": "#344573",
+                    "on-secondary": "#ffffff", "error-container": "#ffdad6", "surface-variant": "#e1e2e4",
+                    "surface-dim": "#d9dadc", "surface-container": "#edeef0", "surface-container-high": "#e7e8ea",
+                    "on-secondary-fixed": "#021945", "on-surface-variant": "#434654", "background": "#f8f9fb",
+                    "on-secondary-container": "#415382", "surface-tint": "#0c56d0", "inverse-on-surface": "#f0f1f3",
+                    "surface-container-highest": "#e1e2e4", "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed-variant": "#0040a2", "secondary-container": "#b6c8fe", "on-primary-fixed": "#001848",
+                    "on-primary-container": "#c4d2ff", "tertiary-container": "#a33500", "on-tertiary-container": "#ffc6b2",
+                    "on-surface": "#191c1e", "on-error-container": "#93000a", "primary-container": "#0052cc",
+                    "surface": "#f8f9fb", "on-background": "#191c1e", "primary": "#003d9b",
+                    "primary-fixed": "#dae2ff", "error": "#ba1a1a"
                 },
-                fontFamily: {
-                    headline: ["Manrope", "sans-serif"],
-                    body: ["Inter", "sans-serif"],
-                }
-            }
-        }
+                borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.75rem", "full": "0.75rem" },
+                fontFamily: { "headline": ["Manrope"], "body": ["Inter"], "label": ["Inter"] }
+            },
+        },
     }
 </script>
 </head>
@@ -97,19 +89,19 @@
 
     <div class="bg-surface-container-lowest rounded-3xl shadow-sm border border-outline-variant/30 overflow-hidden">
         <div class="p-6 border-b border-outline-variant/30 bg-surface-container-lowest flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <form action="{{ route('bendahara.status-pembayaran.index') }}" method="GET" class="flex flex-wrap md:flex-nowrap gap-3 w-full">
-                <div class="flex-1 min-w-[200px]">
+            <form action="{{ route('bendahara.status-pembayaran.index') }}" method="GET" class="flex flex-nowrap gap-3 w-full overflow-x-auto pb-2 custom-scrollbar">
+                <div class="w-full md:w-48 shrink-0">
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama..." class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
                 </div>
-                <div class="w-full md:w-auto">
-                    <select name="role" class="w-full md:w-auto rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
+                <div class="w-full md:w-auto shrink-0">
+                    <select name="role" class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
                         <option value="">Semua Role (Pengurus & Bendahara)</option>
                         <option value="pengurus" {{ request('role') == 'pengurus' ? 'selected' : '' }}>Pengurus</option>
                         <option value="bendahara" {{ request('role') == 'bendahara' ? 'selected' : '' }}>Bendahara</option>
                     </select>
                 </div>
-                <div class="w-full md:w-auto">
-                    <select name="status" class="w-full md:w-auto rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
+                <div class="w-full md:w-auto shrink-0">
+                    <select name="status" class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
                         <option value="">Semua Status</option>
                         <option value="Lunas" {{ request('status') == 'Lunas' ? 'selected' : '' }}>Lunas</option>
                         <option value="Menunggu Verifikasi" {{ request('status') == 'Menunggu Verifikasi' ? 'selected' : '' }}>Menunggu Verifikasi</option>
@@ -117,21 +109,21 @@
                         <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
                     </select>
                 </div>
-                <div class="w-full md:w-auto">
-                    <select name="bulan" class="w-full md:w-auto rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
+                <div class="w-full md:w-auto shrink-0">
+                    <select name="bulan" class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
                         <option value="">Semua Bulan</option>
                         @for($i = 1; $i <= 12; $i++)
                             <option value="{{ $i }}" {{ request('bulan') == $i ? 'selected' : '' }}>Bulan {{ $i }}</option>
                         @endfor
                     </select>
                 </div>
-                <div class="w-full md:w-auto">
+                <div class="w-full md:w-auto shrink-0">
                     <input type="number" name="tahun" value="{{ request('tahun') }}" placeholder="Tahun" class="w-full md:w-24 rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
                 </div>
-                <div class="w-full md:w-auto flex items-end">
+                <div class="w-full md:w-auto flex items-end shrink-0">
                     <button type="submit" class="w-full bg-surface-container border border-outline-variant/40 px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-surface-container-high transition">Filter</button>
                 </div>
-                <div class="w-full md:w-auto flex items-end">
+                <div class="w-full md:w-auto flex items-end shrink-0">
                     <a href="{{ route('bendahara.status-pembayaran.index') }}" class="w-full text-center text-primary bg-primary-container/30 border border-primary/20 px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-primary-container/50 transition">Reset</a>
                 </div>
             </form>

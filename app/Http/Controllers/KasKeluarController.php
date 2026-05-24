@@ -10,7 +10,6 @@ class KasKeluarController extends Controller
 {
     public function index(Request $request)
     {
- fitur-pembayaran-kasv3
         $query = KasKeluar::query();
 
         // Search bar (nama transaksi, kategori, deskripsi)
@@ -59,11 +58,6 @@ class KasKeluarController extends Controller
         }
 
         return view('bendahara.kas-keluar.index', compact('kasKeluar', 'categories'));
-
-        // Panggil juga relasi kategorinya agar lebih ringan dimuat
-        $kasKeluar = KasKeluar::with('kategori')->orderBy('tanggal', 'desc')->orderBy('created_at', 'desc')->get();
-        return view('bendahara.kas-keluar.index', compact('kasKeluar'));
-main
     }
 
     public function create()

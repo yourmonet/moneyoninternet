@@ -39,7 +39,10 @@ class GoogleAuthController extends Controller
         // Encode role ke dalam state parameter
         $state = base64_encode(json_encode(['role' => $role]));
 
-        return Socialite::driver('google')
+        /** @var \Laravel\Socialite\Two\GoogleProvider $driver */
+        $driver = Socialite::driver('google');
+        
+        return $driver
             ->stateless()
             ->with(['state' => $state])
             ->redirect();
@@ -53,7 +56,7 @@ class GoogleAuthController extends Controller
     {
         // Baca role dari state parameter yang dikembalikan Google
         $role = 'anggota';
-        $rawState = $request->get('state');
+        $rawState = $request->input('state');
         if ($rawState) {
             $stateData = json_decode(base64_decode($rawState), true);
             if (isset($stateData['role']) && in_array($stateData['role'], ['anggota', 'pengurus', 'bendahara'])) {
@@ -64,7 +67,9 @@ class GoogleAuthController extends Controller
         $loginRoute = $this->loginRouteByRole($role);
 
         try {
-            $googleUser = Socialite::driver('google')->stateless()->user();
+            /** @var \Laravel\Socialite\Two\GoogleProvider $driver */
+            $driver = Socialite::driver('google');
+            $googleUser = $driver->stateless()->user();
         } catch (\Exception $e) {
             return redirect($loginRoute)->withErrors(['email' => 'Autentikasi Google gagal. Silakan coba lagi.']);
         }

@@ -10,7 +10,6 @@ class KasMasukController extends Controller
 {
     public function index(Request $request)
     {
-fitur-pembayaran-kasv3
         $query = KasMasuk::with('user');
 
         // Search bar (nama transaksi, kategori, deskripsi, nama anggota/penginput)
@@ -62,12 +61,6 @@ fitur-pembayaran-kasv3
         }
 
         return view('bendahara.kas-masuk.index', compact('kasMasuk', 'categories'));
-
-        // Mengurutkan berdasarkan tanggal terbaru, lalu waktu input (created_at) terbaru
-        // Ditambahkan with('kategori') agar nama kategori langsung ditarik dari database dengan efisien
-        $kasMasuk = KasMasuk::with('kategori')->orderBy('tanggal', 'desc')->orderBy('created_at', 'desc')->get();
-        return view('bendahara.kas-masuk.index', compact('kasMasuk'));
-main
     }
 
     public function create()

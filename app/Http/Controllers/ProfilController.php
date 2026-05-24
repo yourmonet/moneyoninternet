@@ -30,7 +30,9 @@ class ProfilController extends Controller
             
             // Jika menggunakan S3 (Supabase), simpan full URL agar bisa langsung dirender
             if ($disk === 's3' || $disk === 'supabase') {
-                $user->avatar = Storage::disk($disk)->url($path);
+                /** @var \Illuminate\Contracts\Filesystem\Cloud $cloudStorage */
+                $cloudStorage = Storage::disk($disk);
+                $user->avatar = $cloudStorage->url($path);
             } else {
                 $user->avatar = $path;
             }

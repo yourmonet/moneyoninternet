@@ -38,6 +38,11 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::middleware(['role:anggota', 'verified'])->group(function () {
         Route::get('dashboard', [AnggotaAuthController::class, 'dashboard'])->name('dashboard');
         Route::post('logout',   [AnggotaAuthController::class, 'logout'])->name('logout');
+
+        // Pengajuan Dana (Sudah dikunci kembali dengan session login)
+        Route::get('pengajuan-dana', [\App\Http\Controllers\User\PengajuanDanaController::class, 'index'])->name('pengajuan-dana.index');
+        Route::get('pengajuan-dana/create', [\App\Http\Controllers\User\PengajuanDanaController::class, 'create'])->name('pengajuan-dana.create');
+        Route::post('pengajuan-dana', [\App\Http\Controllers\User\PengajuanDanaController::class, 'store'])->name('pengajuan-dana.store');
     });
 });
 
@@ -59,6 +64,11 @@ Route::prefix('pengurus')->name('pengurus.')->group(function () {
         Route::get('status-pembayaran', [StatusPembayaranController::class, 'index'])->name('status-pembayaran.index');
         Route::get('pembayaran', [\App\Http\Controllers\User\PembayaranKasController::class, 'index'])->name('pembayaran.index');
         Route::post('pembayaran', [\App\Http\Controllers\User\PembayaranKasController::class, 'store'])->name('pembayaran.store');
+
+        // Pengajuan Dana
+        Route::get('pengajuan-dana', [\App\Http\Controllers\Pengurus\PengajuanDanaController::class, 'index'])->name('pengajuan-dana.index');
+        Route::get('pengajuan-dana/{id}', [\App\Http\Controllers\Pengurus\PengajuanDanaController::class, 'show'])->name('pengajuan-dana.show');
+        Route::post('pengajuan-dana/{id}/proses', [\App\Http\Controllers\Pengurus\PengajuanDanaController::class, 'proses'])->name('pengajuan-dana.proses');
     });
 });
 
@@ -94,23 +104,21 @@ Route::prefix('bendahara')->name('bendahara.')->group(function () {
         Route::post('status-pembayaran/generate', [StatusPembayaranController::class, 'generateBulanIni'])->name('status-pembayaran.generate');
         Route::get('pembayaran', [\App\Http\Controllers\User\PembayaranKasController::class, 'index'])->name('pembayaran.index');
         Route::post('pembayaran', [\App\Http\Controllers\User\PembayaranKasController::class, 'store'])->name('pembayaran.store');
+
+        // Pengajuan Dana
+        Route::get('pengajuan-dana', [\App\Http\Controllers\Bendahara\PengajuanDanaController::class, 'index'])->name('pengajuan-dana.index');
+        Route::get('pengajuan-dana/{id}', [\App\Http\Controllers\Bendahara\PengajuanDanaController::class, 'show'])->name('pengajuan-dana.show');
+        Route::post('pengajuan-dana/{id}/proses', [\App\Http\Controllers\Bendahara\PengajuanDanaController::class, 'proses'])->name('pengajuan-dana.proses');
     });
 });
 
 // ─────────────────────────────────────────────────────────
 // GOOGLE OAUTH
 // ─────────────────────────────────────────────────────────
-// PENTING: callback & complete harus didefinisikan SEBELUM {role}
-// agar Laravel tidak menganggap "callback" sebagai nilai role.
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'handleCallback'])->name('auth.google.callback');
 Route::get('/auth/google/complete', [GoogleAuthController::class, 'showCompleteProfile'])->name('auth.google.complete');
 Route::post('/auth/google/complete',[GoogleAuthController::class, 'completeProfile'])->name('auth.google.complete.post');
 Route::get('/auth/google/{role}',   [GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google.redirect');
-
-// ─────────────────────────────────────────────────────────
-// PROFIL — prefix: /profil
-// ─────────────────────────────────────────────────────────
-// Profil sudah dipindah ke bendahara.
 
 Route::get('/login', function () {
     return redirect('/user/login');

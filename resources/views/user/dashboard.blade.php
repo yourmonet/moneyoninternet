@@ -76,7 +76,9 @@
         <a class="flex items-center gap-3 px-4 py-3 {{ Request::routeIs('user.dashboard') ? 'bg-white text-blue-700' : 'text-on-surface hover:bg-surface-container' }} rounded-lg scale-95 transition-all font-headline font-medium text-sm" href="{{ route('user.dashboard') }}">
             <span class="material-symbols-outlined">dashboard</span> Dashboard
         </a>
-        
+        <a class="flex items-center gap-3 px-4 py-3 {{ Request::routeIs('user.pengajuan-dana.*') ? 'bg-white text-blue-700' : 'text-on-surface hover:bg-surface-container' }} rounded-lg scale-95 transition-all font-headline font-medium text-sm" href="{{ route('user.pengajuan-dana.index') }}">
+            <span class="material-symbols-outlined">volunteer_activism</span> Pengajuan Dana
+        </a>
     </nav>
 
     <div class="mt-auto flex flex-col gap-1 border-t border-outline-variant/10 pt-4">

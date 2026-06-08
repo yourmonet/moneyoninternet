@@ -52,10 +52,10 @@
         </div>
         @if(Auth::user()->avatar)
             @php
-                $loopAv = Auth::user()->avatar;
-                $loopAvatarUrl = (str_starts_with($loopAv, 'http://') || str_starts_with($loopAv, 'https://')) ? $loopAv : '/storage/' . $loopAv;
+                $avatarUrl = Auth::user()->avatar;
+                $avatarSrc = (str_starts_with($avatarUrl, 'http://') || str_starts_with($avatarUrl, 'https://')) ? $avatarUrl : asset('storage/' . $avatarUrl);
             @endphp
-            <img src="{{ $loopAvatarUrl }}" class="w-10 h-10 rounded-full object-cover border border-outline-variant/30 shadow-sm" alt="Avatar" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="{{ $avatarSrc }}" class="w-10 h-10 rounded-full object-cover border border-outline-variant/30 shadow-sm" alt="Avatar" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="w-10 h-10 rounded-full bg-primary text-white text-sm font-bold shadow-sm" style="display:none; align-items:center; justify-content:center;">
                 {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
             </div>
@@ -88,6 +88,10 @@
         </div>
     @endif
     
+<<<<<<< HEAD
+=======
+
+>>>>>>> fitur-status-final
     <!-- Clean Rounded Card Table Container -->
     <div class="bg-surface-container-lowest rounded-3xl shadow-sm border border-outline-variant/30 overflow-hidden">
         <!-- Filter Header Section -->
@@ -143,6 +147,43 @@
                 <tbody class="divide-y divide-outline-variant/20">
                     @include('bendahara.kas-keluar._rows')
 
+<<<<<<< HEAD
+=======
+    <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-surface-container-low text-on-surface-variant font-headline text-sm uppercase tracking-wider border-b border-outline-variant/30">
+                        <th class="px-6 py-4 font-bold">Tanggal</th>
+                        <th class="px-6 py-4 font-bold">Keterangan</th>
+                        <th class="px-6 py-4 font-bold">Kategori</th>
+                        <th class="px-6 py-4 font-bold">Sumber</th>
+                        <th class="px-6 py-4 font-bold text-right">Nominal</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant/20">
+                    @forelse($kasKeluar as $kk)
+                        <tr class="hover:bg-surface-container-lowest/50 transition-colors">
+                            <td class="px-6 py-4 text-sm font-medium">{{ \Carbon\Carbon::parse($kk->tanggal)->translatedFormat('d F Y') }}</td>
+                            <td class="px-6 py-4 text-sm">{{ $kk->keterangan }}</td>
+                            <td class="px-6 py-4 text-sm font-bold text-blue-900">
+                                {{ $kk->kategori ? $kk->kategori->nama_kategori : 'Tanpa Kategori' }}
+                            </td>
+                            <td class="px-6 py-4 text-sm capitalize">
+                                <span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold">
+                                    {{ $kk->sumber }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm font-bold text-right text-red-600">
+                                Rp {{ number_format($kk->nominal, 0, ',', '.') }}
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="px-6 py-8 text-center text-on-surface-variant text-sm">Belum ada data kas keluar.</td>
+                        </tr>
+                    @endforelse
+>>>>>>> fitur-status-final
 
                 </tbody>
             </table>

@@ -69,6 +69,7 @@
 </nav>
 
 {{-- Sidebar --}}
+<<<<<<< HEAD
 <aside class="h-screen w-64 fixed left-0 top-0 bg-gray-100 flex flex-col p-4 pt-20 z-40">
 
 
@@ -92,6 +93,9 @@
         </form>
     </div>
 </aside>
+=======
+@include('components.sidebar-anggota')
+>>>>>>> fitur-status-final
 
 {{-- Main Content --}}
 <main class="ml-64 pt-20 p-8 min-h-screen">

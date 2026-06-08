@@ -9,8 +9,13 @@
         <a class="flex items-center gap-3 px-4 py-3 {{ Request::routeIs('pengurus.pembayaran.index') ? 'bg-white text-blue-700 scale-95 shadow-sm' : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface' }} rounded-lg transition-all font-headline font-medium text-sm" href="{{ route('pengurus.pembayaran.index') }}">
             <span class="material-symbols-outlined">payments</span> Pembayaran Kas
         </a>
+<<<<<<< HEAD
         <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('pengurus.pengajuan-dana.*') ? 'bg-white text-blue-700 rounded-lg scale-95 shadow-sm' : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface' }} transition-all font-headline font-medium text-sm" href="{{ route('pengurus.pengajuan-dana.index') }}">
             <span class="material-symbols-outlined">volunteer_activism</span> Pengajuan Dana
+=======
+        <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('pengurus.pengajuan-dana.*') ? 'bg-white text-blue-700 scale-95 shadow-sm' : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface' }} rounded-lg transition-all font-headline font-medium text-sm" href="{{ route('pengurus.pengajuan-dana.index') }}">
+            <span class="material-symbols-outlined">handshake</span> Pengajuan Dana
+>>>>>>> fitur-status-final
         </a>
     </nav>
 

@@ -1,202 +1,267 @@
 <!DOCTYPE html>
 <html class="light" lang="id">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Kas Masuk - MONET</title>
-<link rel="icon" type="image/png" href="https://cdn-1.yourmonet.web.id/images/monet.png">
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script>
-    tailwind.config = {
-        darkMode: "class",
-        theme: {
-            extend: {
-                colors: {
-                    "secondary": "#4c5d8d", "tertiary": "#7b2600", "outline-variant": "#c3c6d6",
-                    "surface-container-low": "#f3f4f6", "outline": "#737685", "on-primary": "#ffffff",
-                    "secondary-fixed": "#dae2ff", "inverse-surface": "#2e3132", "inverse-primary": "#b2c5ff",
-                    "surface-variant": "#e1e2e4", "surface-container-lowest": "#ffffff",
-                    "on-surface": "#191c1e", "on-error-container": "#93000a", "primary-container": "#0052cc",
-                    "surface": "#f8f9fb", "on-background": "#191c1e", "primary": "#003d9b", "error": "#ba1a1a"
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Kas Masuk - MONET</title>
+    <link rel="icon" type="image/png" href="https://cdn-1.yourmonet.web.id/images/monet.png">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary": "#4c5d8d",
+                        "tertiary": "#7b2600",
+                        "outline-variant": "#c3c6d6",
+                        "surface-container-low": "#f3f4f6",
+                        "outline": "#737685",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#dae2ff",
+                        "inverse-surface": "#2e3132",
+                        "inverse-primary": "#b2c5ff",
+                        "surface-variant": "#e1e2e4",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#0052cc",
+                        "surface": "#f8f9fb",
+                        "on-background": "#191c1e",
+                        "primary": "#003d9b",
+                        "error": "#ba1a1a"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.75rem",
+                        "full": "0.75rem"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
                 },
-                borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.75rem", "full": "0.75rem" },
-                fontFamily: { "headline": ["Manrope"], "body": ["Inter"], "label": ["Inter"] }
             },
-        },
-    }
-</script>
-<style>
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-</style>
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
 </head>
+
 <body class="bg-surface font-body text-on-surface">
 
-<nav class="fixed top-0 w-full z-50 bg-gray-50/85 backdrop-blur-md shadow-sm flex justify-between items-center px-8 h-16 font-headline antialiased">
-    <div class="flex items-center gap-8">
-        <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="MONET" class="h-8 w-auto object-contain"/>
-    </div>
-    <div class="flex items-center gap-3">
-        <div class="text-right hidden sm:block">
-            <div class="text-sm font-black text-blue-900 leading-tight">{{ Auth::user()->name }}</div>
-            <div class="text-[10px] uppercase tracking-widest text-outline font-bold mt-0.5">{{ Auth::user()->role ?? 'Bendahara' }}</div>
+    <nav class="fixed top-0 w-full z-50 bg-gray-50/85 backdrop-blur-md shadow-sm flex justify-between items-center px-8 h-16 font-headline antialiased">
+        <div class="flex items-center gap-8">
+            <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="MONET" class="h-8 w-auto object-contain" />
         </div>
-        @if(Auth::user()->avatar)
+        <div class="flex items-center gap-3">
+            <div class="text-right hidden sm:block">
+                <div class="text-sm font-black text-blue-900 leading-tight">{{ Auth::user()->name }}</div>
+                <div class="text-[10px] uppercase tracking-widest text-outline font-bold mt-0.5">{{ Auth::user()->role ?? 'Bendahara' }}</div>
+            </div>
+            @if(Auth::user()->avatar)
             @php
-                $loopAv = Auth::user()->avatar;
-                $loopAvatarUrl = (str_starts_with($loopAv, 'http://') || str_starts_with($loopAv, 'https://')) ? $loopAv : '/storage/' . $loopAv;
+            $avatarUrl = Auth::user()->avatar;
+            $avatarSrc = (str_starts_with($avatarUrl, 'http://') || str_starts_with($avatarUrl, 'https://')) ? $avatarUrl : asset('storage/' . $avatarUrl);
             @endphp
-            <img src="{{ $loopAvatarUrl }}" class="w-10 h-10 rounded-full object-cover border border-outline-variant/30 shadow-sm" alt="Avatar" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="{{ $avatarSrc }}" class="w-10 h-10 rounded-full object-cover border border-outline-variant/30 shadow-sm" alt="Avatar" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="w-10 h-10 rounded-full bg-primary text-white text-sm font-bold shadow-sm" style="display:none; align-items:center; justify-content:center;">
                 {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
             </div>
-        @else
+            @else
             <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold shadow-sm">
                 {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
             </div>
-        @endif
-    </div>
-</nav>
-
-@include('components.sidebar-bendahara')
-
-<main class="ml-64 pt-20 p-8 min-h-screen">
-    <header class="flex justify-between items-end mb-10">
-        <div>
-            <h1 class="text-3xl font-headline font-extrabold tracking-tight text-on-surface">Data Kas Masuk</h1>
-            <p class="text-on-surface-variant font-body mt-1">Kelola data pemasukan keuangan organisasi secara real-time.</p>
+            @endif
         </div>
-        <a href="{{ route('bendahara.kas-masuk.create') }}" class="bg-primary text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:bg-primary/90 transition shadow-sm hover:shadow-md">
-            <span class="material-symbols-outlined text-xl">add</span>
-            Tambah Kas Masuk
-        </a>
-    </header>
+    </nav>
 
-    @if (session('success'))
+    @include('components.sidebar-bendahara')
+
+    <main class="ml-64 pt-20 p-8 min-h-screen">
+        <header class="flex justify-between items-end mb-10">
+            <div>
+
+                <h1 class="text-3xl font-headline font-extrabold tracking-tight text-on-surface">Data Kas Masuk</h1>
+                <p class="text-on-surface-variant font-body mt-1">Kelola data pemasukan keuangan organisasi secara real-time.</p>
+            </div>
+
+
+
+            <a href="{{ route('bendahara.kas-masuk.create') }}" class="flex items-center gap-2 px-5 py-3 bg-primary text-white rounded-xl font-bold text-sm hover:bg-blue-800 transition-all shadow-md">
+
+                <span class="material-symbols-outlined text-xl">add</span>
+                Tambah Kas Masuk
+            </a>
+        </header>
+
+        @if (session('success'))
         <div class="mb-6 p-4 bg-success-container rounded-xl border border-success/20 flex items-center gap-2">
             <span class="material-symbols-outlined text-success">check_circle</span>
             <p class="text-on-success-container text-sm font-semibold">{{ session('success') }}</p>
         </div>
-    @endif
-    
-    <!-- Clean Rounded Card Table Container -->
-    <div class="bg-surface-container-lowest rounded-3xl shadow-sm border border-outline-variant/30 overflow-hidden">
-        <!-- Filter Header Section -->
-        <div class="px-6 py-4 border-b border-outline-variant/30 bg-surface-container-lowest">
-            <form id="filter-form" class="flex flex-wrap items-center gap-3 w-full">
-                <!-- Cari Keterangan -->
-                <div class="w-full md:w-48 shrink-0">
-                    <input type="text" id="search" name="search" placeholder="Cari keterangan..." 
-                        class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
-                </div>
-                <!-- Tanggal -->
-                <div class="w-full md:w-44 shrink-0">
-                    <input type="date" id="tanggal" name="tanggal"
-                        class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
-                </div>
-                <!-- Kategori / Sumber -->
-                <div class="w-full md:w-40 shrink-0">
-                    <select id="sumber" name="sumber" 
-                        class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm capitalize">
-                        <option value="">Semua Kategori</option>
-                        @foreach($categories as $cat)
+        @endif
+
+
+        <!-- Clean Rounded Card Table Container -->
+        <div class="bg-surface-container-lowest rounded-3xl shadow-sm border border-outline-variant/30 overflow-hidden">
+            <!-- Filter Header Section -->
+            <div class="px-6 py-4 border-b border-outline-variant/30 bg-surface-container-lowest">
+                <form id="filter-form" class="flex flex-wrap items-center gap-3 w-full">
+                    <!-- Cari Keterangan -->
+                    <div class="w-full md:w-48 shrink-0">
+                        <input type="text" id="search" name="search" placeholder="Cari keterangan..."
+                            class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
+                    </div>
+                    <!-- Tanggal -->
+                    <div class="w-full md:w-44 shrink-0">
+                        <input type="date" id="tanggal" name="tanggal"
+                            class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
+                    </div>
+                    <!-- Kategori / Sumber -->
+                    <div class="w-full md:w-40 shrink-0">
+                        <select id="sumber" name="sumber"
+                            class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm capitalize">
+                            <option value="">Semua Kategori</option>
+                            @foreach($categories as $cat)
                             <option value="{{ $cat }}">{{ $cat }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <!-- Status Pembayaran -->
-                <div class="w-full md:w-36 shrink-0">
-                    <select id="status" name="status" 
-                        class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
-                        <option value="">Semua Status</option>
-                        <option value="lunas">Lunas</option>
-                    </select>
-                </div>
-                <!-- Tombol Aksi -->
-                <div class="flex gap-2 w-full md:w-auto shrink-0">
-                    <button type="submit" class="flex-1 md:flex-none bg-primary text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-primary/90 transition shadow-sm whitespace-nowrap">Cari</button>
-                    <button type="button" id="btn-reset" class="flex-1 md:flex-none bg-surface-container border border-outline-variant/40 px-4 py-2 rounded-xl text-sm font-bold hover:bg-surface-container-high transition whitespace-nowrap">Reset</button>
-                </div>
-            </form>
-        </div>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- Status Pembayaran -->
+                    <div class="w-full md:w-36 shrink-0">
+                        <select id="status" name="status"
+                            class="w-full rounded-xl border-outline-variant/50 focus:border-primary focus:ring focus:ring-primary/20 text-sm">
+                            <option value="">Semua Status</option>
+                            <option value="lunas">Lunas</option>
+                        </select>
+                    </div>
+                    <!-- Tombol Aksi -->
+                    <div class="flex gap-2 w-full md:w-auto shrink-0">
+                        <button type="submit" class="flex-1 md:flex-none bg-primary text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-primary/90 transition shadow-sm whitespace-nowrap">Cari</button>
+                        <button type="button" id="btn-reset" class="flex-1 md:flex-none bg-surface-container border border-outline-variant/40 px-4 py-2 rounded-xl text-sm font-bold hover:bg-surface-container-high transition whitespace-nowrap">Reset</button>
+                    </div>
+                </form>
+            </div>
 
-        <div class="overflow-x-auto overflow-y-auto max-h-[520px]">
-            <table class="w-full text-left border-collapse text-sm whitespace-nowrap">
-                <thead class="bg-gray-50 border-b border-outline-variant/30 text-on-surface-variant uppercase text-[11px] font-bold tracking-wider sticky top-0 z-10">
-                    <tr>
-                        <th class="px-6 py-4">Tanggal</th>
-                        <th class="px-6 py-4">Keterangan</th>
-                        <th class="px-6 py-4">Sumber / Kategori</th>
-                        <th class="px-6 py-4 text-center">Status</th>
-                        <th class="px-6 py-4 text-right">Jumlah</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-outline-variant/20">
-                    @include('bendahara.kas-masuk._rows')
+            <div class="overflow-x-auto overflow-y-auto max-h-[520px]">
+                <table class="w-full text-left border-collapse text-sm whitespace-nowrap">
+                    <thead class="bg-gray-50 border-b border-outline-variant/30 text-on-surface-variant uppercase text-[11px] font-bold tracking-wider sticky top-0 z-10">
+                        <tr>
+                            <th class="px-6 py-4">Tanggal</th>
+                            <th class="px-6 py-4">Keterangan</th>
+                            <th class="px-6 py-4">Sumber / Kategori</th>
+                            <th class="px-6 py-4 text-center">Status</th>
+                            <th class="px-6 py-4 text-right">Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-outline-variant/20">
+                        @include('bendahara.kas-masuk._rows')
 
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr class="bg-gray-50 text-gray-600 font-headline text-sm uppercase tracking-wider border-b border-gray-200">
+                                            <th class="px-6 py-4 font-bold">Tanggal</th>
+                                            <th class="px-6 py-4 font-bold">Keterangan</th>
+                                            <th class="px-6 py-4 font-bold">Kategori</th>
+                                            <th class="px-6 py-4 font-bold">Sumber</th>
+                                            <th class="px-6 py-4 font-bold text-right">Jumlah</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100">
+                                        @forelse($kasMasuk as $km)
+                                        <tr class="hover:bg-gray-50/50 transition-colors">
+                                            <td class="px-6 py-4 text-sm font-medium">{{ \Carbon\Carbon::parse($km->tanggal)->translatedFormat('d F Y') }}</td>
+                                            <td class="px-6 py-4 text-sm">{{ $km->keterangan }}</td>
+                                            <td class="px-6 py-4 text-sm font-bold text-blue-900">
+                                                {{ $km->kategori ? $km->kategori->nama_kategori : 'Tanpa Kategori' }}
+                                            </td>
+                                            <td class="px-6 py-4 text-sm capitalize">
+                                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">
+                                                    {{ $km->sumber }}
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 text-sm font-bold text-right text-green-600">
+                                                Rp {{ number_format($km->jumlah, 0, ',', '.') }}
+                                            </td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="5" class="px-6 py-8 text-center text-gray-400 text-sm">Belum ada data kas masuk.</td>
+                                        </tr>
+                                        @endforelse
 
-                </tbody>
-            </table>
-        </div>
-        <div id="pagination-container" class="px-6 py-4 border-t border-outline-variant/30">
-            {{ $kasMasuk->appends(request()->query())->links() }}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="pagination-container" class="px-6 py-4 border-t border-outline-variant/30">
+                                {{ $kasMasuk->appends(request()->query())->links() }}
+                            </div>
+                        </div>
+    </main>
+
+    {{-- Logout Modal --}}
+    <div id="logout-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="hideLogoutModal()"></div>
+        <div class="bg-surface-container-lowest p-8 rounded-3xl shadow-2xl w-full max-w-sm relative z-10 transform scale-95 transition-transform duration-300">
+            <div class="w-16 h-16 bg-error-container border-4 border-white shadow-sm rounded-full flex items-center justify-center text-error mb-4 mx-auto -mt-12">
+                <span class="material-symbols-outlined text-3xl">logout</span>
+            </div>
+            <h2 class="text-2xl font-headline font-extrabold text-center text-on-surface mb-2">Keluar?</h2>
+            <p class="text-center text-on-surface-variant text-sm mb-8">Anda harus login kembali untuk mengakses dashboard.</p>
+            <div class="flex gap-3">
+                <button onclick="hideLogoutModal()" class="flex-1 py-3 px-4 rounded-xl border border-outline-variant/30 text-on-surface-variant font-bold text-sm hover:bg-surface-container transition-colors">
+                    Batal
+                </button>
+                <button onclick="document.getElementById('logout-form').submit()" class="flex-1 py-3 px-4 rounded-xl bg-error text-white font-bold text-sm hover:bg-error/90 shadow-lg shadow-error/20 transition-all">
+                    Ya, Keluar
+                </button>
+            </div>
         </div>
     </div>
-</main>
 
-{{-- Logout Modal --}}
-<div id="logout-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="hideLogoutModal()"></div>
-    <div class="bg-surface-container-lowest p-8 rounded-3xl shadow-2xl w-full max-w-sm relative z-10 transform scale-95 transition-transform duration-300">
-        <div class="w-16 h-16 bg-error-container border-4 border-white shadow-sm rounded-full flex items-center justify-center text-error mb-4 mx-auto -mt-12">
-            <span class="material-symbols-outlined text-3xl">logout</span>
-        </div>
-        <h2 class="text-2xl font-headline font-extrabold text-center text-on-surface mb-2">Keluar?</h2>
-        <p class="text-center text-on-surface-variant text-sm mb-8">Anda harus login kembali untuk mengakses dashboard.</p>
-        <div class="flex gap-3">
-            <button onclick="hideLogoutModal()" class="flex-1 py-3 px-4 rounded-xl border border-outline-variant/30 text-on-surface-variant font-bold text-sm hover:bg-surface-container transition-colors">
-                Batal
-            </button>
-            <button onclick="document.getElementById('logout-form').submit()" class="flex-1 py-3 px-4 rounded-xl bg-error text-white font-bold text-sm hover:bg-error/90 shadow-lg shadow-error/20 transition-all">
-                Ya, Keluar
-            </button>
-        </div>
-    </div>
-</div>
+    <script>
+        const modal = document.getElementById('logout-modal');
+        const modalContent = modal.querySelector('div.bg-surface-container-lowest');
 
-<script>
-    const modal = document.getElementById('logout-modal');
-    const modalContent = modal.querySelector('div.bg-surface-container-lowest');
+        function showLogoutModal() {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
 
-    function showLogoutModal() {
-        modal.classList.remove('hidden');
-        setTimeout(() => {
-            modal.classList.remove('opacity-0');
-            modalContent.classList.remove('scale-95');
-            modalContent.classList.add('scale-100');
-        }, 10);
-    }
+        function hideLogoutModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
 
-    function hideLogoutModal() {
-        modal.classList.add('opacity-0');
-        modalContent.classList.remove('scale-100');
-        modalContent.classList.add('scale-95');
-        setTimeout(() => {
-            modal.classList.add('hidden');
-        }, 300);
-    }
+        // Advanced search & filter dynamic reloading (AJAX Fetch)
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterForm = document.getElementById('filter-form');
+            const tableBody = document.querySelector('table tbody');
+            const btnReset = document.getElementById('btn-reset');
+            let debounceTimer;
 
-    // Advanced search & filter dynamic reloading (AJAX Fetch)
-    document.addEventListener('DOMContentLoaded', function() {
-        const filterForm = document.getElementById('filter-form');
-        const tableBody = document.querySelector('table tbody');
-        const btnReset = document.getElementById('btn-reset');
-        let debounceTimer;
-
-        function fetchFilteredData(url = null) {
-            // Shimmer loading/spinner indicator
-            tableBody.innerHTML = `
+            function fetchFilteredData(url = null) {
+                // Shimmer loading/spinner indicator
+                tableBody.innerHTML = `
                 <tr>
                     <td colspan="5" class="px-6 py-16 text-center">
                         <div class="flex flex-col items-center justify-center gap-3">
@@ -207,45 +272,45 @@
                 </tr>
             `;
 
-            const formData = new FormData(filterForm);
-            const params = new URLSearchParams(formData);
-            
-            let fetchUrl = `{{ route('bendahara.kas-masuk.index') }}?${params.toString()}&ajax=1`;
-            if (url) {
-                // If a URL is passed (from pagination), attach current filters
-                const urlObj = new URL(url);
-                for (const [key, value] of formData.entries()) {
-                    if (value) urlObj.searchParams.set(key, value);
-                }
-                urlObj.searchParams.set('ajax', '1');
-                fetchUrl = urlObj.toString();
-            }
+                const formData = new FormData(filterForm);
+                const params = new URLSearchParams(formData);
 
-            fetch(fetchUrl, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Jaringan bermasalah');
-                return response.json();
-            })
-            .then(data => {
-                // Update table rows smoothly
-                tableBody.style.transition = 'opacity 0.15s ease-in-out';
-                tableBody.style.opacity = 0;
-                setTimeout(() => {
-                    tableBody.innerHTML = data.html;
-                    const paginationContainer = document.getElementById('pagination-container');
-                    if (paginationContainer && data.pagination) {
-                        paginationContainer.innerHTML = data.pagination;
+                let fetchUrl = `{{ route('bendahara.kas-masuk.index') }}?${params.toString()}&ajax=1`;
+                if (url) {
+                    // If a URL is passed (from pagination), attach current filters
+                    const urlObj = new URL(url);
+                    for (const [key, value] of formData.entries()) {
+                        if (value) urlObj.searchParams.set(key, value);
                     }
-                    tableBody.style.opacity = 1;
-                }, 150);
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                tableBody.innerHTML = `
+                    urlObj.searchParams.set('ajax', '1');
+                    fetchUrl = urlObj.toString();
+                }
+
+                fetch(fetchUrl, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Jaringan bermasalah');
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Update table rows smoothly
+                        tableBody.style.transition = 'opacity 0.15s ease-in-out';
+                        tableBody.style.opacity = 0;
+                        setTimeout(() => {
+                            tableBody.innerHTML = data.html;
+                            const paginationContainer = document.getElementById('pagination-container');
+                            if (paginationContainer && data.pagination) {
+                                paginationContainer.innerHTML = data.pagination;
+                            }
+                            tableBody.style.opacity = 1;
+                        }, 150);
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                        tableBody.innerHTML = `
                     <tr>
                         <td colspan="5" class="px-6 py-12 text-center text-error font-semibold text-sm">
                             <span class="material-symbols-outlined text-3xl mb-2 text-error">error</span>
@@ -253,46 +318,47 @@
                         </td>
                     </tr>
                 `;
+                    });
+            }
+
+            // Handle form submit
+            filterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                fetchFilteredData();
             });
-        }
 
-        // Handle form submit
-        filterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            fetchFilteredData();
-        });
-
-        // Auto-fetch on date or dropdown change
-        ['change', 'input'].forEach(evt => {
-            filterForm.querySelectorAll('select, input[type="date"]').forEach(elem => {
-                elem.addEventListener(evt, fetchFilteredData);
+            // Auto-fetch on date or dropdown change
+            ['change', 'input'].forEach(evt => {
+                filterForm.querySelectorAll('select, input[type="date"]').forEach(elem => {
+                    elem.addEventListener(evt, fetchFilteredData);
+                });
             });
-        });
 
-        // Debounced auto-fetch on typing search keyword
-        document.getElementById('search').addEventListener('input', function() {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(fetchFilteredData, 400);
-        });
-
-        // Reset all filter controls
-        btnReset.addEventListener('click', function() {
-            filterForm.reset();
-            fetchFilteredData();
-        });
-
-        // Intercept pagination clicks for AJAX loading
-        const paginationContainer = document.getElementById('pagination-container');
-        if (paginationContainer) {
-            paginationContainer.addEventListener('click', function(e) {
-                const link = e.target.closest('a');
-                if (link) {
-                    e.preventDefault();
-                    fetchFilteredData(link.href);
-                }
+            // Debounced auto-fetch on typing search keyword
+            document.getElementById('search').addEventListener('input', function() {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(fetchFilteredData, 400);
             });
-        }
-    });
-</script>
+
+            // Reset all filter controls
+            btnReset.addEventListener('click', function() {
+                filterForm.reset();
+                fetchFilteredData();
+            });
+
+            // Intercept pagination clicks for AJAX loading
+            const paginationContainer = document.getElementById('pagination-container');
+            if (paginationContainer) {
+                paginationContainer.addEventListener('click', function(e) {
+                    const link = e.target.closest('a');
+                    if (link) {
+                        e.preventDefault();
+                        fetchFilteredData(link.href);
+                    }
+                });
+            }
+        });
+    </script>
 </body>
+
 </html>

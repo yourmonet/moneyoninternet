@@ -43,8 +43,11 @@ class LaporanKeuanganController extends Controller
         $totalKeluar  = (clone $kasKeluarQuery)->sum('nominal');
         $saldoBersih  = $totalMasuk - $totalKeluar;
 
-        $kasMasuk = $kasMasukQuery->orderBy('tanggal', 'asc')->paginate(10, ['*'], 'masuk_page')->withQueryString();
-        $kasKeluar = $kasKeluarQuery->orderBy('tanggal', 'asc')->paginate(10, ['*'], 'keluar_page')->withQueryString();
+        $kasMasuk = (clone $kasMasukQuery)->orderBy('tanggal', 'asc')->paginate(10, ['*'], 'masuk_page')->withQueryString();
+        $kasKeluar = (clone $kasKeluarQuery)->orderBy('tanggal', 'asc')->paginate(10, ['*'], 'keluar_page')->withQueryString();
+
+        $countMasuk = $kasMasuk->total();
+        $countKeluar = $kasKeluar->total();
 
         $countMasuk = $kasMasuk->total();
         $countKeluar = $kasKeluar->total();
@@ -59,14 +62,12 @@ class LaporanKeuanganController extends Controller
             $tahunTersedia->push($y);
         }
 
-        
-    // Updated controller return with count variables
-    return view('bendahara.laporan.index', compact(
-        'kasMasuk', 'kasKeluar',
-        'totalMasuk', 'totalKeluar', 'saldoBersih',
-        'bulan', 'tahun', 'tahunTersedia',
-        'countMasuk', 'countKeluar'
-    ));
+        return view('bendahara.laporan.index', compact(
+            'kasMasuk', 'kasKeluar',
+            'totalMasuk', 'totalKeluar', 'saldoBersih',
+            'bulan', 'tahun', 'tahunTersedia',
+            'countMasuk', 'countKeluar'
+        ));
 
     }
 

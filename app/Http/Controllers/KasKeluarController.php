@@ -10,11 +10,7 @@ class KasKeluarController extends Controller
 {
     public function index(Request $request)
     {
-<<<<<<< HEAD
-        $query = KasKeluar::query();
-=======
         $query = KasKeluar::with('kategori');
->>>>>>> fitur-status-final
 
         // Search bar
         if ($request->filled('search')) {

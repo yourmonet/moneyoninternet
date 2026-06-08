@@ -10,11 +10,7 @@ class KasMasukController extends Controller
 {
     public function index(Request $request)
     {
-<<<<<<< HEAD
-        $query = KasMasuk::with('user');
-=======
         $query = KasMasuk::with(['user', 'kategori']);
->>>>>>> fitur-status-final
 
         // Search bar (nama transaksi, kategori, deskripsi, nama anggota/penginput)
         if ($request->filled('search')) {

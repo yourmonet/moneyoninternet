@@ -38,17 +38,9 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::middleware(['role:anggota', 'verified'])->group(function () {
         Route::get('dashboard', [AnggotaAuthController::class, 'dashboard'])->name('dashboard');
         Route::post('logout',   [AnggotaAuthController::class, 'logout'])->name('logout');
-<<<<<<< HEAD
-
-        // Pengajuan Dana (Sudah dikunci kembali dengan session login)
-        Route::get('pengajuan-dana', [\App\Http\Controllers\User\PengajuanDanaController::class, 'index'])->name('pengajuan-dana.index');
-        Route::get('pengajuan-dana/create', [\App\Http\Controllers\User\PengajuanDanaController::class, 'create'])->name('pengajuan-dana.create');
-        Route::post('pengajuan-dana', [\App\Http\Controllers\User\PengajuanDanaController::class, 'store'])->name('pengajuan-dana.store');
-=======
         Route::get('pembayaran', [\App\Http\Controllers\User\PembayaranKasController::class, 'index'])->name('pembayaran.index');
         Route::post('pembayaran', [\App\Http\Controllers\User\PembayaranKasController::class, 'store'])->name('pembayaran.store');
         Route::resource('pengajuan-dana', \App\Http\Controllers\PengajuanDanaController::class)->only(['index', 'create', 'store', 'show']);
->>>>>>> fitur-status-final
     });
 });
 
@@ -72,19 +64,11 @@ Route::prefix('pengurus')->name('pengurus.')->group(function () {
         Route::post('status-pembayaran/reminder-massal', [StatusPembayaranController::class, 'sendMassReminder'])->name('status-pembayaran.reminder-massal');
         Route::get('pembayaran', [\App\Http\Controllers\User\PembayaranKasController::class, 'index'])->name('pembayaran.index');
         Route::post('pembayaran', [\App\Http\Controllers\User\PembayaranKasController::class, 'store'])->name('pembayaran.store');
-<<<<<<< HEAD
-
-        // Pengajuan Dana
-        Route::get('pengajuan-dana', [\App\Http\Controllers\Pengurus\PengajuanDanaController::class, 'index'])->name('pengajuan-dana.index');
-        Route::get('pengajuan-dana/{id}', [\App\Http\Controllers\Pengurus\PengajuanDanaController::class, 'show'])->name('pengajuan-dana.show');
-        Route::post('pengajuan-dana/{id}/proses', [\App\Http\Controllers\Pengurus\PengajuanDanaController::class, 'proses'])->name('pengajuan-dana.proses');
-=======
         Route::get('pengajuan-dana/export/pdf', [\App\Http\Controllers\PengajuanDanaController::class, 'exportPdf'])->name('pengajuan-dana.pdf');
         Route::get('pengajuan-dana/export/excel', [\App\Http\Controllers\PengajuanDanaController::class, 'exportExcel'])->name('pengajuan-dana.excel');
         Route::resource('pengajuan-dana', \App\Http\Controllers\PengajuanDanaController::class);
         Route::post('pengajuan-dana/{id}/approve', [\App\Http\Controllers\PengajuanDanaController::class, 'approve'])->name('pengajuan-dana.approve');
         Route::post('pengajuan-dana/{id}/reject', [\App\Http\Controllers\PengajuanDanaController::class, 'reject'])->name('pengajuan-dana.reject');
->>>>>>> fitur-status-final
     });
 });
 
@@ -118,16 +102,6 @@ Route::prefix('bendahara')->name('bendahara.')->group(function () {
         
         Route::get('status-pembayaran', [StatusPembayaranController::class, 'index'])->name('status-pembayaran.index');
         Route::post('status-pembayaran/generate', [StatusPembayaranController::class, 'generateBulanIni'])->name('status-pembayaran.generate');
-<<<<<<< HEAD
-        Route::post('status-pembayaran/{id}/pengingat', [StatusPembayaranController::class, 'kirimPengingat'])->name('status-pembayaran.pengingat');
-        Route::get('pembayaran', [\App\Http\Controllers\User\PembayaranKasController::class, 'index'])->name('pembayaran.index');
-        Route::post('pembayaran', [\App\Http\Controllers\User\PembayaranKasController::class, 'store'])->name('pembayaran.store');
-
-        // Pengajuan Dana
-        Route::get('pengajuan-dana', [\App\Http\Controllers\Bendahara\PengajuanDanaController::class, 'index'])->name('pengajuan-dana.index');
-        Route::get('pengajuan-dana/{id}', [\App\Http\Controllers\Bendahara\PengajuanDanaController::class, 'show'])->name('pengajuan-dana.show');
-        Route::post('pengajuan-dana/{id}/proses', [\App\Http\Controllers\Bendahara\PengajuanDanaController::class, 'proses'])->name('pengajuan-dana.proses');
-=======
         Route::post('status-pembayaran/{id}/verify', [StatusPembayaranController::class, 'verify'])->name('status-pembayaran.verify');
         Route::post('status-pembayaran/{id}/reject', [StatusPembayaranController::class, 'reject'])->name('status-pembayaran.reject');
         Route::post('status-pembayaran/{id}/ingatkan', [StatusPembayaranController::class, 'sendReminder'])->name('status-pembayaran.ingatkan');
@@ -139,7 +113,6 @@ Route::prefix('bendahara')->name('bendahara.')->group(function () {
         Route::resource('pengajuan-dana', \App\Http\Controllers\PengajuanDanaController::class);
         Route::post('pengajuan-dana/{id}/approve', [\App\Http\Controllers\PengajuanDanaController::class, 'approve'])->name('pengajuan-dana.approve');
         Route::post('pengajuan-dana/{id}/reject', [\App\Http\Controllers\PengajuanDanaController::class, 'reject'])->name('pengajuan-dana.reject');
->>>>>>> fitur-status-final
     });
 });
 

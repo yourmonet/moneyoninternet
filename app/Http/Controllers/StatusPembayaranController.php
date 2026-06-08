@@ -8,10 +8,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-<<<<<<< HEAD
-use App\Notifications\TagihanKasBaruNotification;
-use App\Notifications\PengingatTagihanNotification;
-=======
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TagihanBaruMail;
 use App\Mail\PembayaranBerhasilMail;
@@ -19,7 +15,6 @@ use App\Mail\PembayaranDitolakMail;
 use App\Mail\ReminderTagihanMail;
 use App\Models\PembayaranKasReminder;
 use App\Jobs\SendMassReminderJob;
->>>>>>> fitur-status-final
 
 class StatusPembayaranController extends Controller
 {
@@ -64,7 +59,7 @@ class StatusPembayaranController extends Controller
             });
         }
 
-        // Urutkan berdasarkan periode terbaru (karena format periode YYYY-MM bisa disorting langsung)
+        // Urutkan berdasarkan periode terbaru
         $pembayarans = $query->orderBy('periode', 'desc')
                             ->paginate(30);
 
@@ -133,19 +128,6 @@ class StatusPembayaranController extends Controller
                 ]);
                 $generatedCount++;
 
-<<<<<<< HEAD
-                // Kirim notifikasi ke user (pengurus/bendahara)
-                $userTarget->notify(new TagihanKasBaruNotification($bulan, $tahun, $jumlahIuran));
-            }
-        }
-
-        return redirect()->back()->with('success', "Berhasil membuat {$generatedCount} tagihan untuk periode Bulan {$bulan} Tahun {$tahun} dan notifikasi telah dikirim.");
-    }
-
-    public function kirimPengingat($id)
-    {
-        // Hanya bendahara
-=======
                 // Kirim email tagihan baru!
                 try {
                     Mail::to($userTarget->email)->send(new TagihanBaruMail($pembayaran));
@@ -163,23 +145,10 @@ class StatusPembayaranController extends Controller
      */
     public function verify(Request $request, $id)
     {
->>>>>>> fitur-status-final
         if (Auth::user()->role !== 'bendahara') {
             abort(403);
         }
 
-<<<<<<< HEAD
-        $pembayaran = PembayaranKas::with('user')->findOrFail($id);
-
-        if ($pembayaran->status !== 'Belum Bayar') {
-            return redirect()->back()->with('error', 'Tagihan ini sudah dibayar atau sedang menunggu verifikasi.');
-        }
-
-        // Kirim notifikasi pengingat
-        $pembayaran->user->notify(new PengingatTagihanNotification($pembayaran->periode, $pembayaran->nominal));
-
-        return redirect()->back()->with('success', "Pengingat tagihan berhasil dikirim ke {$pembayaran->user->name}.");
-=======
         $pembayaran = PembayaranKas::findOrFail($id);
 
         if ($pembayaran->status !== 'Menunggu Verifikasi') {
@@ -311,6 +280,5 @@ class StatusPembayaranController extends Controller
         SendMassReminderJob::dispatch(Auth::id());
 
         return redirect()->back()->with('success', "Proses pengiriman pengingat massal telah dimasukkan ke dalam antrean (Queue) untuk {$eligibleCount} anggota. Silakan jalankan 'php artisan queue:work' jika antrean belum berjalan.");
->>>>>>> fitur-status-final
     }
 }

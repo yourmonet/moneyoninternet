@@ -200,17 +200,6 @@
                                 {{ $pembayaran->bukti_pembayaran ? \Carbon\Carbon::parse($pembayaran->updated_at)->format('d/m/Y H:i') : '-' }}
                             </td>
                             <td class="px-6 py-4 text-center">
-<<<<<<< HEAD
-                                @if($pembayaran->status === 'Belum Bayar')
-                                    <form action="{{ route('bendahara.status-pembayaran.pengingat', $pembayaran->id) }}" method="POST" class="inline-block">
-                                        @csrf
-                                        <button type="submit" class="bg-primary/10 text-primary hover:bg-primary hover:text-white px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1 border border-primary/20">
-                                            <span class="material-symbols-outlined text-[14px]">notifications_active</span> Ingatkan
-                                        </button>
-                                    </form>
-                                @else
-                                    <span class="text-outline-variant">-</span>
-=======
                                 @if($pembayaran->status === 'Menunggu Verifikasi' && $pembayaran->bukti_pembayaran)
                                     <div class="flex items-center justify-center gap-1.5">
                                         <button onclick="openBuktiModal('{{ asset('storage/' . $pembayaran->bukti_pembayaran) }}', '{{ $pembayaran->user->name }}', '{{ Carbon\Carbon::createFromFormat('Y-m', $pembayaran->periode)->translatedFormat('F Y') }}')" class="p-1.5 bg-surface-container hover:bg-surface-container-high rounded-lg text-primary transition-all" title="Lihat Bukti">
@@ -241,7 +230,6 @@
                                     @else
                                         <span class="text-xs text-outline">—</span>
                                     @endif
->>>>>>> fitur-status-final
                                 @endif
                             </td>
                         </tr>
@@ -361,6 +349,7 @@
         }, 10);
     }
 
+    // Close Bukti Modal
     function closeBuktiModal() {
         buktiModal.classList.add('opacity-0');
         buktiModalContent.classList.remove('scale-100');

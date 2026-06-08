@@ -248,11 +248,15 @@ class StatusPembayaranController extends Controller
      */
     public function sendMassReminder(Request $request)
     {
+        // Prevent PHP timeout for large batch of synchronous emails
+        @set_time_limit(0);
+
         $unpaid = PembayaranKas::whereIn('status', ['Belum Bayar', 'Ditolak'])
             ->with('user')
             ->get();
 
-        $eligibleCount = 0;
+        $successCount = 0;
+        $failCount = 0;
         $spamCount = 0;
 
         foreach ($unpaid as $pembayaran) {
@@ -266,19 +270,38 @@ class StatusPembayaranController extends Controller
                 ->exists();
 
             if (!$lastReminder) {
-                $eligibleCount++;
+                try {
+                    Mail::to($pembayaran->user->email)->send(new ReminderTagihanMail($pembayaran));
+
+                    // Record reminder log
+                    PembayaranKasReminder::create([
+                        'pembayaran_kas_id' => $pembayaran->id,
+                        'sender_id' => Auth::id(),
+                        'recipient_id' => $pembayaran->user_id,
+                    ]);
+
+                    $successCount++;
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::error("Gagal mengirim email pengingat massal ke {$pembayaran->user->email}: " . $e->getMessage());
+                    $failCount++;
+                }
             } else {
                 $spamCount++;
             }
         }
 
-        if ($eligibleCount === 0) {
+        if ($successCount === 0 && $failCount === 0) {
             return redirect()->back()->with('info', "Tidak ada anggota yang memenuhi syarat untuk dikirimi pengingat saat ini (semua sudah diingatkan dalam 24 jam terakhir).");
         }
 
-        // Dispatch mass reminder job
-        SendMassReminderJob::dispatch(Auth::id());
+        $message = "Berhasil mengirimkan email pengingat ke {$successCount} anggota.";
+        if ($failCount > 0) {
+            $message .= " Gagal mengirim ke {$failCount} anggota.";
+        }
+        if ($spamCount > 0) {
+            $message .= " Sebanyak {$spamCount} anggota dilewati karena sudah diingatkan dalam 24 jam terakhir.";
+        }
 
-        return redirect()->back()->with('success', "Proses pengiriman pengingat massal telah dimasukkan ke dalam antrean (Queue) untuk {$eligibleCount} anggota. Silakan jalankan 'php artisan queue:work' jika antrean belum berjalan.");
+        return redirect()->back()->with('success', $message);
     }
 }

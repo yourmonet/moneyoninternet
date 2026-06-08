@@ -159,7 +159,6 @@
                                     {{ $item->rejection_reason }}
                                 @else
                                     —
-                                </td>
                                 @endif
                             </td>
                             <td class="px-6 py-4 text-center" onclick="event.stopPropagation()">

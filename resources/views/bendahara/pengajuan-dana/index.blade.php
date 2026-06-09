@@ -99,6 +99,7 @@
     @endif
 
     {{-- 1. DASHBOARD APPROVAL --}}
+    @if(Auth::user()->role === 'bendahara')
     <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
         <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-outline-variant/30 flex items-center gap-3">
             <div class="w-10 h-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
@@ -150,18 +151,26 @@
             </div>
         </div>
     </div>
+    @endif
 
     {{-- Tabs --}}
     <div class="flex border-b border-outline-variant/30 mb-6 gap-6">
+        @if(Auth::user()->role === 'bendahara')
         <button onclick="switchTab('all')" id="tab-all-btn" class="py-3 px-1 border-b-2 border-primary text-primary font-bold text-sm transition-all">
             Semua Pengajuan Anggota
         </button>
         <button onclick="switchTab('my')" id="tab-my-btn" class="py-3 px-1 border-b-2 border-transparent text-on-surface-variant hover:text-on-surface font-semibold text-sm transition-all">
             Pengajuan Saya
         </button>
+        @else
+        <button id="tab-my-btn" class="py-3 px-1 border-b-2 border-primary text-primary font-bold text-sm transition-all">
+            Pengajuan Saya
+        </button>
+        @endif
     </div>
 
     {{-- 2. DAFTAR PENGAJUAN (Tab content 1: Semua Pengajuan) --}}
+    @if(Auth::user()->role === 'bendahara')
     <div id="tab-all" class="space-y-6">
         {{-- Filters & Export --}}
         <div class="bg-surface-container-lowest p-6 rounded-3xl border border-outline-variant/30 shadow-sm">
@@ -329,9 +338,10 @@
             </div>
         </div>
     </div>
+    @endif
 
     {{-- Tab content 2: Pengajuan Saya --}}
-    <div id="tab-my" class="space-y-6 hidden">
+    <div id="tab-my" class="space-y-6 {{ Auth::user()->role === 'bendahara' ? 'hidden' : '' }}">
         <div class="bg-surface-container-lowest rounded-3xl shadow-sm border border-outline-variant/30 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm whitespace-nowrap">

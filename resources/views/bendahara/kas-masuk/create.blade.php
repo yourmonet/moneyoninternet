@@ -79,7 +79,7 @@
         </a>
     </header>
 
-    <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-8 max-w-2xl">
+    <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-8 w-full">
         <form action="{{ route('bendahara.kas-masuk.store') }}" method="POST" class="flex flex-col gap-6">
             @csrf
             

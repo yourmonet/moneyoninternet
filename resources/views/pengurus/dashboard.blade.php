@@ -128,74 +128,13 @@
         </div>
     </div>
 
-    {{-- Billing Stats --}}
-    <h2 class="text-xl font-headline font-bold text-on-surface mb-4">Statistik Tagihan &amp; Reminder</h2>
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-        {{-- Total Tagihan --}}
-        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-outline-variant/30 flex items-center gap-3">
-            <div class="w-10 h-10 bg-primary-container/40 text-primary rounded-xl flex items-center justify-center">
-                <span class="material-symbols-outlined text-xl">receipt_long</span>
-            </div>
-            <div>
-                <p class="text-xs text-on-surface-variant font-medium">Total Tagihan</p>
-                <h4 class="text-lg font-bold text-on-surface">{{ $totalTagihan }}</h4>
-            </div>
-        </div>
 
-        {{-- Tagihan Belum Bayar --}}
-        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-outline-variant/30 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background-color: #fff3cd; color: #856404;">
-                <span class="material-symbols-outlined text-xl">pending_actions</span>
-            </div>
-            <div>
-                <p class="text-xs text-on-surface-variant font-medium">Belum Bayar</p>
-                <h4 class="text-lg font-bold text-on-surface">{{ $tagihanBelumBayar }}</h4>
-            </div>
-        </div>
-
-        {{-- Tagihan Lunas --}}
-        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-outline-variant/30 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background-color: #d1e7dd; color: #0f5132;">
-                <span class="material-symbols-outlined text-xl">check_circle</span>
-            </div>
-            <div>
-                <p class="text-xs text-on-surface-variant font-medium">Tagihan Lunas</p>
-                <h4 class="text-lg font-bold text-on-surface">{{ $tagihanLunas }}</h4>
-            </div>
-        </div>
-
-        {{-- Tagihan Jatuh Tempo --}}
-        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-outline-variant/30 flex items-center gap-3">
-            <div class="w-10 h-10 bg-error-container text-error rounded-xl flex items-center justify-center">
-                <span class="material-symbols-outlined text-xl">schedule</span>
-            </div>
-            <div>
-                <p class="text-xs text-on-surface-variant font-medium">Jatuh Tempo</p>
-                <h4 class="text-lg font-bold text-on-surface">{{ $tagihanJatuhTempo }}</h4>
-            </div>
-        </div>
-
-        {{-- Reminder Terkirim --}}
-        <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-outline-variant/30 flex items-center gap-3 col-span-2 md:col-span-1">
-            <div class="w-10 h-10 bg-secondary-fixed-dim/40 text-on-secondary-fixed-variant rounded-xl flex items-center justify-center">
-                <span class="material-symbols-outlined text-xl">campaign</span>
-            </div>
-            <div>
-                <p class="text-xs text-on-surface-variant font-medium">Reminder Terkirim</p>
-                <h4 class="text-lg font-bold text-on-surface">{{ $jumlahReminderTerkirim }}</h4>
-            </div>
-        </div>
-    </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {{-- Recent Transactions List --}}
         <div class="lg:col-span-2 bg-surface-container-lowest rounded-3xl p-8 shadow-sm border border-outline-variant/30">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-headline font-bold text-on-surface">Transaksi Terbaru</h3>
-                <a href="#" class="text-primary font-bold text-sm hover:text-primary/80 transition-colors flex items-center gap-1 group">
-                    Lihat Semua
-                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                </a>
             </div>
             <div class="space-y-3">
                 @forelse ($transaksiTerbaru as $transaksi)
@@ -242,7 +181,7 @@
                 <div class="relative z-10">
                     <h3 class="text-lg font-headline font-extrabold text-on-secondary-container mb-2">Butuh Bantuan?</h3>
                     <p class="text-sm text-on-secondary-container/80 mb-6 font-medium leading-relaxed">Pelajari cara mengelola kas dengan lebih efektif menggunakan sistem MONET.</p>
-                    <a href="#" class="inline-flex items-center gap-2 bg-on-secondary-container text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-on-secondary-container/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+                    <a href="https://cdn-1.yourmonet.web.id/files/manual-book-monet.pdf" class="inline-flex items-center gap-2 bg-on-secondary-container text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-on-secondary-container/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
                         <span class="material-symbols-outlined text-lg">menu_book</span>
                         Baca Panduan
                     </a>

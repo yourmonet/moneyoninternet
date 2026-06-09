@@ -3,11 +3,17 @@
         <a class="flex items-center gap-3 px-4 py-3 {{ Request::routeIs('user.dashboard') ? 'bg-white text-blue-700 scale-95 shadow-sm' : 'text-on-surface hover:bg-surface-container' }} rounded-lg transition-all font-headline font-medium text-sm" href="{{ route('user.dashboard') }}">
             <span class="material-symbols-outlined">dashboard</span> Dashboard
         </a>
-        <a class="flex items-center gap-3 px-4 py-3 {{ Request::routeIs('user.pembayaran.index') ? 'bg-white text-blue-700 scale-95 shadow-sm' : 'text-on-surface hover:bg-surface-container' }} rounded-lg transition-all font-headline font-medium text-sm" href="{{ route('user.pembayaran.index') }}">
-            <span class="material-symbols-outlined">payments</span> Pembayaran Kas
+        <a class="flex items-center gap-3 px-4 py-3 {{ Request::routeIs('user.kas-masuk.index') ? 'bg-white text-blue-700 scale-95 shadow-sm' : 'text-on-surface hover:bg-surface-container' }} rounded-lg transition-all font-headline font-medium text-sm" href="{{ route('user.kas-masuk.index') }}">
+            <span class="material-symbols-outlined">south_west</span> Kas Masuk
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 {{ Request::routeIs('user.kas-keluar.index') ? 'bg-white text-blue-700 scale-95 shadow-sm' : 'text-on-surface hover:bg-surface-container' }} rounded-lg transition-all font-headline font-medium text-sm" href="{{ route('user.kas-keluar.index') }}">
+            <span class="material-symbols-outlined">north_east</span> Kas Keluar
         </a>
         <a class="flex items-center gap-3 px-4 py-3 {{ Request::routeIs('user.pengajuan-dana.*') ? 'bg-white text-blue-700 scale-95 shadow-sm' : 'text-on-surface hover:bg-surface-container' }} rounded-lg transition-all font-headline font-medium text-sm" href="{{ route('user.pengajuan-dana.index') }}">
             <span class="material-symbols-outlined">handshake</span> Pengajuan Dana
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 {{ Request::routeIs('user.profil.edit') ? 'bg-white text-blue-700 scale-95 shadow-sm' : 'text-on-surface hover:bg-surface-container' }} rounded-lg transition-all font-headline font-medium text-sm" href="{{ route('user.profil.edit') }}">
+            <span class="material-symbols-outlined">person</span> Profil Saya
         </a>
     </nav>
 

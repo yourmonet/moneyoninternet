@@ -130,7 +130,7 @@ class StatusPembayaranController extends Controller
 
                 // Kirim email tagihan baru!
                 try {
-                    Mail::to($userTarget->email)->send(new TagihanBaruMail($pembayaran));
+                    $userTarget->notify(new \App\Notifications\TagihanKasBaruNotification($bulan, $tahun, $jumlahIuran));
                 } catch (\Exception $e) {
                     \Illuminate\Support\Facades\Log::error("Gagal mengirim email tagihan baru ke {$userTarget->email}: " . $e->getMessage());
                 }
@@ -215,19 +215,9 @@ class StatusPembayaranController extends Controller
             return redirect()->back()->with('error', 'Reminder hanya dapat dikirim untuk tagihan yang belum dibayar atau ditolak.');
         }
 
-        // Spam protection: max 1 reminder per member every 24 hours
-        $lastReminder = PembayaranKasReminder::where('pembayaran_kas_id', $pembayaran->id)
-            ->where('recipient_id', $pembayaran->user_id)
-            ->where('created_at', '>=', Carbon::now()->subHours(24))
-            ->first();
-
-        if ($lastReminder) {
-            $formattedTime = $lastReminder->created_at->addHours(24)->diffForHumans();
-            return redirect()->back()->with('error', "Batas pengiriman reminder: Maksimal 1 reminder per 24 jam. Anda baru dapat mengirim pengingat lagi {$formattedTime}.");
-        }
 
         try {
-            Mail::to($pembayaran->user->email)->send(new ReminderTagihanMail($pembayaran));
+            $pembayaran->user->notify(new \App\Notifications\PengingatTagihanNotification($pembayaran->periode, $pembayaran->nominal));
 
             // Record reminder log
             PembayaranKasReminder::create([
@@ -259,47 +249,36 @@ class StatusPembayaranController extends Controller
         $failCount = 0;
         $spamCount = 0;
 
+        /** @var \App\Models\PembayaranKas $pembayaran */
         foreach ($unpaid as $pembayaran) {
             if (!$pembayaran->user || !$pembayaran->user->email) {
                 continue;
             }
 
-            $lastReminder = PembayaranKasReminder::where('pembayaran_kas_id', $pembayaran->id)
-                ->where('recipient_id', $pembayaran->user_id)
-                ->where('created_at', '>=', Carbon::now()->subHours(24))
-                ->exists();
+            try {
+                $pembayaran->user->notify(new \App\Notifications\PengingatTagihanNotification($pembayaran->periode, $pembayaran->nominal));
 
-            if (!$lastReminder) {
-                try {
-                    Mail::to($pembayaran->user->email)->send(new ReminderTagihanMail($pembayaran));
+                // Record reminder log
+                PembayaranKasReminder::create([
+                    'pembayaran_kas_id' => $pembayaran->id,
+                    'sender_id' => Auth::id(),
+                    'recipient_id' => $pembayaran->user_id,
+                ]);
 
-                    // Record reminder log
-                    PembayaranKasReminder::create([
-                        'pembayaran_kas_id' => $pembayaran->id,
-                        'sender_id' => Auth::id(),
-                        'recipient_id' => $pembayaran->user_id,
-                    ]);
-
-                    $successCount++;
-                } catch (\Exception $e) {
-                    \Illuminate\Support\Facades\Log::error("Gagal mengirim email pengingat massal ke {$pembayaran->user->email}: " . $e->getMessage());
-                    $failCount++;
-                }
-            } else {
-                $spamCount++;
+                $successCount++;
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error("Gagal mengirim email pengingat massal ke {$pembayaran->user->email}: " . $e->getMessage());
+                $failCount++;
             }
         }
 
         if ($successCount === 0 && $failCount === 0) {
-            return redirect()->back()->with('info', "Tidak ada anggota yang memenuhi syarat untuk dikirimi pengingat saat ini (semua sudah diingatkan dalam 24 jam terakhir).");
+            return redirect()->back()->with('info', "Tidak ada anggota yang memenuhi syarat untuk dikirimi pengingat saat ini.");
         }
 
         $message = "Berhasil mengirimkan email pengingat ke {$successCount} anggota.";
         if ($failCount > 0) {
             $message .= " Gagal mengirim ke {$failCount} anggota.";
-        }
-        if ($spamCount > 0) {
-            $message .= " Sebanyak {$spamCount} anggota dilewati karena sudah diingatkan dalam 24 jam terakhir.";
         }
 
         return redirect()->back()->with('success', $message);

@@ -83,7 +83,7 @@
         </div>
     @endif
 
-    <div class="bg-surface-container-lowest rounded-3xl shadow-sm border border-outline-variant/30 max-w-2xl overflow-hidden">
+    <div class="bg-surface-container-lowest rounded-3xl shadow-sm border border-outline-variant/30 w-full overflow-hidden">
         <form action="{{ route('bendahara.pengajuan-dana.store') }}" method="POST" enctype="multipart/form-data" class="p-8 space-y-6">
             @csrf
 

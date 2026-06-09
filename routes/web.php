@@ -38,8 +38,10 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::middleware(['role:anggota', 'verified'])->group(function () {
         Route::get('dashboard', [AnggotaAuthController::class, 'dashboard'])->name('dashboard');
         Route::post('logout',   [AnggotaAuthController::class, 'logout'])->name('logout');
-        Route::get('pembayaran', [\App\Http\Controllers\User\PembayaranKasController::class, 'index'])->name('pembayaran.index');
-        Route::post('pembayaran', [\App\Http\Controllers\User\PembayaranKasController::class, 'store'])->name('pembayaran.store');
+        Route::get('kas-masuk', [KasMasukController::class, 'index'])->name('kas-masuk.index');
+        Route::get('kas-keluar', [KasKeluarController::class, 'index'])->name('kas-keluar.index');
+        Route::get('profil-saya', [\App\Http\Controllers\ProfilController::class, 'edit'])->name('profil.edit');
+        Route::put('profil-saya', [\App\Http\Controllers\ProfilController::class, 'update'])->name('profil.update');
         Route::resource('pengajuan-dana', \App\Http\Controllers\PengajuanDanaController::class)->only(['index', 'create', 'store', 'show']);
     });
 });
@@ -59,9 +61,10 @@ Route::prefix('pengurus')->name('pengurus.')->group(function () {
     Route::middleware(['role:pengurus', 'verified'])->group(function () {
         Route::get('dashboard', [PengurusAuthController::class, 'dashboard'])->name('dashboard');
         Route::post('logout',   [PengurusAuthController::class, 'logout'])->name('logout');
-        Route::get('status-pembayaran', [StatusPembayaranController::class, 'index'])->name('status-pembayaran.index');
-        Route::post('status-pembayaran/{id}/ingatkan', [StatusPembayaranController::class, 'sendReminder'])->name('status-pembayaran.ingatkan');
-        Route::post('status-pembayaran/reminder-massal', [StatusPembayaranController::class, 'sendMassReminder'])->name('status-pembayaran.reminder-massal');
+        Route::get('kas-masuk', [KasMasukController::class, 'index'])->name('kas-masuk.index');
+        Route::get('kas-keluar', [KasKeluarController::class, 'index'])->name('kas-keluar.index');
+        Route::get('profil-saya', [\App\Http\Controllers\ProfilController::class, 'edit'])->name('profil.edit');
+        Route::put('profil-saya', [\App\Http\Controllers\ProfilController::class, 'update'])->name('profil.update');
         Route::get('pembayaran', [\App\Http\Controllers\User\PembayaranKasController::class, 'index'])->name('pembayaran.index');
         Route::post('pembayaran', [\App\Http\Controllers\User\PembayaranKasController::class, 'store'])->name('pembayaran.store');
         Route::get('pengajuan-dana/export/pdf', [\App\Http\Controllers\PengajuanDanaController::class, 'exportPdf'])->name('pengajuan-dana.pdf');

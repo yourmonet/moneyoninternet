@@ -99,20 +99,19 @@
                 </noscript>
             </form>
         </div>
-        <div class="p-8 pt-4 overflow-x-auto overflow-y-auto max-h-[520px]">
-            <table class="w-full text-left border-collapse">
-                <thead class="sticky top-0 bg-surface-container-lowest z-10 shadow-sm">
-                    <tr class="border-b border-outline-variant/30 text-sm font-bold text-on-surface-variant uppercase tracking-wider">
-                        <th class="pb-4 pl-4">Profil</th>
-                        <th class="pb-4">Peran</th>
-                        <th class="pb-4">Status Kas</th>
-                        <th class="pb-4 text-right pr-4">Aksi</th>
+        <div class="overflow-x-auto overflow-y-auto max-h-[520px]">
+            <table class="w-full text-left border-collapse text-sm whitespace-nowrap">
+                <thead class="bg-gray-50 border-b border-outline-variant/30 text-on-surface-variant uppercase text-[11px] font-bold tracking-wider sticky top-0 z-10">
+                    <tr>
+                        <th class="px-6 py-4">Profil</th>
+                        <th class="px-6 py-4">Peran</th>
+                        <th class="px-6 py-4 text-right">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-sm">
+                <tbody class="divide-y divide-outline-variant/20">
                     @foreach($users as $u)
-                        <tr class="border-b border-outline-variant/10 hover:bg-surface-container/30 transition-colors">
-                            <td class="py-4 pl-4">
+                        <tr class="hover:bg-surface-container/30 transition-colors">
+                            <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
                                     @if($u->avatar)
                                         @php
@@ -134,28 +133,14 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="py-4">
+                            <td class="px-6 py-4">
                                 <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider 
                                     {{ $u->role === 'bendahara' ? 'bg-blue-100 text-blue-800' : ($u->role === 'pengurus' ? 'bg-emerald-100 text-emerald-800' : 'bg-purple-100 text-purple-800') }}">
                                     {{ $u->role }}
                                 </span>
                             </td>
-                            <td class="py-4">
-                                @if($u->role === 'anggota')
-                                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-xs font-bold tooltip-trigger" title="Anggota tidak diwajibkan membayar kas">
-                                        <span class="material-symbols-outlined text-[14px]">block</span> Bebas Kas
-                                    </div>
-                                @elseif($u->belum_lunas_count == 0)
-                                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-bold">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-green-600"></div> Lunas
-                                    </div>
-                                @else
-                                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-800 text-xs font-bold tooltip-trigger" title="{{ $u->belum_lunas_count }} tagihan belum lunas">
-                                        <div class="w-1.5 h-1.5 rounded-full bg-red-600"></div> Tunggakan
-                                    </div>
-                                @endif
-                            </td>
-                            <td class="py-4 text-right pr-4">
+
+                            <td class="px-6 py-4 text-right">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('bendahara.manajemen-data-anggota.show', $u->id) }}" class="p-2 rounded-xl text-primary hover:bg-primary-container/40 transition-colors tooltip-trigger" title="Lihat Detail &amp; Riwayat Kas">
                                         <span class="material-symbols-outlined text-[20px]">visibility</span>

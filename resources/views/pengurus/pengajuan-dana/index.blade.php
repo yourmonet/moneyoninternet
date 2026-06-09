@@ -60,8 +60,8 @@
 <main class="ml-64 pt-20 p-8 min-h-screen">
     <header class="flex justify-between items-end mb-10">
         <div>
-            <h1 class="text-3xl font-headline font-extrabold tracking-tight text-on-surface">Monitoring Pengajuan Dana</h1>
-            <p class="text-on-surface-variant font-body mt-1">Pantau dan verifikasi status pengajuan dana organisasi.</p>
+            <h1 class="text-3xl font-headline font-extrabold tracking-tight text-on-surface">Pengajuan Dana</h1>
+            <p class="text-on-surface-variant font-body mt-1">Ajukan dana untuk keperluan organisasi atau keperluan mendesak.</p>
         </div>
         <div>
             <a href="{{ route('pengurus.pengajuan-dana.create') }}" class="inline-flex items-center gap-2 bg-primary text-white px-5 py-3 rounded-2xl text-sm font-bold hover:bg-primary/95 transition shadow-lg shadow-primary/20">
@@ -79,6 +79,7 @@
     @endif
 
     {{-- DASHBOARD APPROVAL --}}
+    <!-- @if(false)
     <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
         <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-outline-variant/30 flex items-center gap-3">
             <div class="w-10 h-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
@@ -129,8 +130,8 @@
                 <h4 class="text-lg font-bold text-primary">Rp {{ number_format($totalDanaDisetujui, 0, ',', '.') }}</h4>
             </div>
         </div>
-    </div>
-
+    </div> -->
+<!-- 
     {{-- Tabs --}}
     <div class="flex border-b border-outline-variant/30 mb-6 gap-6">
         <button onclick="switchTab('all')" id="tab-all-btn" class="py-3 px-1 border-b-2 border-primary text-primary font-bold text-sm transition-all">
@@ -139,8 +140,8 @@
         <button onclick="switchTab('my')" id="tab-my-btn" class="py-3 px-1 border-b-2 border-transparent text-on-surface-variant hover:text-on-surface font-semibold text-sm transition-all">
             Pengajuan Saya
         </button>
-    </div>
-
+    </div> -->
+<!-- 
     {{-- DAFTAR PENGAJUAN (Tab content 1: Semua Pengajuan) --}}
     <div id="tab-all" class="space-y-6">
         {{-- Filters & Export --}}
@@ -284,9 +285,10 @@
             </div>
         </div>
     </div>
+    @endif -->
 
     {{-- Tab content 2: Pengajuan Saya --}}
-    <div id="tab-my" class="space-y-6 hidden">
+    <div id="tab-my" class="space-y-6">
         <div class="bg-surface-container-lowest rounded-3xl shadow-sm border border-outline-variant/30 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm whitespace-nowrap">

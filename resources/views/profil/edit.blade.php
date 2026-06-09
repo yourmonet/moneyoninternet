@@ -68,7 +68,13 @@
     </div>
 </nav>
 
-@include('components.sidebar-bendahara')
+@if(Auth::user()->role === 'bendahara')
+    @include('components.sidebar-bendahara')
+@elseif(Auth::user()->role === 'pengurus')
+    @include('components.sidebar-pengurus')
+@else
+    @include('components.sidebar-anggota')
+@endif
 
 <main class="ml-64 pt-20 p-8 min-h-screen flex justify-center">
     <div class="w-full max-w-5xl">
@@ -101,7 +107,12 @@
         <div class="flex flex-col lg:flex-row gap-8">
             <!-- Form Area -->
             <div class="flex-1 bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-8">
-                <form action="{{ route('bendahara.profil.update') }}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-8">
+                @php
+                    $updateRoute = 'bendahara.profil.update';
+                    if (Auth::user()->role === 'pengurus') $updateRoute = 'pengurus.profil.update';
+                    elseif (Auth::user()->role === 'anggota') $updateRoute = 'user.profil.update';
+                @endphp
+                <form action="{{ route($updateRoute) }}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-8">
                     @csrf
                     @method('PUT')
                     

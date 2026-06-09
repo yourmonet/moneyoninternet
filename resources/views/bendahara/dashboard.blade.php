@@ -265,7 +265,7 @@
                 <div class="relative z-10">
                     <h3 class="text-lg font-headline font-extrabold text-on-secondary-container mb-2">Butuh Bantuan?</h3>
                     <p class="text-sm text-on-secondary-container/80 mb-6 font-medium leading-relaxed">Pelajari cara mengelola kas dengan lebih efektif menggunakan sistem MONET.</p>
-                    <a href="#" class="inline-flex items-center gap-2 bg-on-secondary-container text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-on-secondary-container/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+                    <a href="https://cdn-1.yourmonet.web.id/files/manual-book-monet.pdf" class="inline-flex items-center gap-2 bg-on-secondary-container text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-on-secondary-container/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
                         <span class="material-symbols-outlined text-lg">menu_book</span>
                         Baca Panduan
                     </a>

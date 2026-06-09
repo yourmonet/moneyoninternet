@@ -3,14 +3,20 @@
         <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('pengurus.dashboard') ? 'bg-white text-blue-700 rounded-lg scale-95 shadow-sm' : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface' }} transition-all font-headline font-medium text-sm" href="{{ route('pengurus.dashboard') }}">
             <span class="material-symbols-outlined">dashboard</span> Dashboard
         </a>
-        <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('pengurus.status-pembayaran.*') ? 'bg-white text-blue-700 rounded-lg scale-95 shadow-sm' : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface' }} transition-all font-headline font-medium text-sm" href="{{ route('pengurus.status-pembayaran.index') }}">
-            <span class="material-symbols-outlined">fact_check</span> Status Pembayaran
+        <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('pengurus.kas-masuk.*') ? 'bg-white text-blue-700 rounded-lg scale-95 shadow-sm' : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface' }} transition-all font-headline font-medium text-sm" href="{{ route('pengurus.kas-masuk.index') }}">
+            <span class="material-symbols-outlined">account_balance_wallet</span> Kas Masuk
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('pengurus.kas-keluar.*') ? 'bg-white text-blue-700 rounded-lg scale-95 shadow-sm' : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface' }} transition-all font-headline font-medium text-sm" href="{{ route('pengurus.kas-keluar.index') }}">
+            <span class="material-symbols-outlined">payments</span> Kas Keluar
         </a>
         <a class="flex items-center gap-3 px-4 py-3 {{ Request::routeIs('pengurus.pembayaran.index') ? 'bg-white text-blue-700 scale-95 shadow-sm' : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface' }} rounded-lg transition-all font-headline font-medium text-sm" href="{{ route('pengurus.pembayaran.index') }}">
             <span class="material-symbols-outlined">payments</span> Pembayaran Kas
         </a>
         <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('pengurus.pengajuan-dana.*') ? 'bg-white text-blue-700 scale-95 shadow-sm' : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface' }} rounded-lg transition-all font-headline font-medium text-sm" href="{{ route('pengurus.pengajuan-dana.index') }}">
             <span class="material-symbols-outlined">handshake</span> Pengajuan Dana
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('pengurus.profil.edit') ? 'bg-white text-blue-700 scale-95 shadow-sm' : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface' }} rounded-lg transition-all font-headline font-medium text-sm" href="{{ route('pengurus.profil.edit') }}">
+            <span class="material-symbols-outlined">person</span> Profil Saya
         </a>
     </nav>
 

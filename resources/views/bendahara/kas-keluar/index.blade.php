@@ -67,7 +67,13 @@
     </div>
 </nav>
 
-@include('components.sidebar-bendahara')
+@if(Auth::user()->role === 'bendahara')
+    @include('components.sidebar-bendahara')
+@elseif(Auth::user()->role === 'pengurus')
+    @include('components.sidebar-pengurus')
+@else
+    @include('components.sidebar-anggota')
+@endif
 
 <main class="ml-64 pt-20 p-8 min-h-screen">
     <header class="flex justify-between items-end mb-10">
@@ -75,10 +81,12 @@
             <h1 class="text-3xl font-headline font-extrabold tracking-tight text-on-surface">Data Kas Keluar</h1>
             <p class="text-on-surface-variant font-body mt-1">Kelola data pengeluaran keuangan organisasi secara real-time.</p>
         </div>
+        @if(Auth::user()->role === 'bendahara')
         <a href="{{ route('bendahara.kas-keluar.create') }}" class="bg-primary text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:bg-primary/90 transition shadow-sm hover:shadow-md">
             <span class="material-symbols-outlined text-xl">add</span>
             Tambah Kas Keluar
         </a>
+        @endif
     </header>
 
     @if (session('success'))
@@ -217,7 +225,7 @@
             const formData = new FormData(filterForm);
             const params = new URLSearchParams(formData);
             
-            let fetchUrl = `{{ route('bendahara.kas-keluar.index') }}?${params.toString()}&ajax=1`;
+            let fetchUrl = `{{ route(Auth::user()->role === 'bendahara' ? 'bendahara.kas-keluar.index' : (Auth::user()->role === 'pengurus' ? 'pengurus.kas-keluar.index' : 'user.kas-keluar.index')) }}?${params.toString()}&ajax=1`;
             if (url) {
                 // If a URL is passed (from pagination), attach current filters
                 const urlObj = new URL(url);

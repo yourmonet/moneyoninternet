@@ -84,7 +84,13 @@
         </div>
     </nav>
 
-    @include('components.sidebar-bendahara')
+    @if(Auth::user()->role === 'bendahara')
+        @include('components.sidebar-bendahara')
+    @elseif(Auth::user()->role === 'pengurus')
+        @include('components.sidebar-pengurus')
+    @else
+        @include('components.sidebar-anggota')
+    @endif
 
     <main class="ml-64 pt-20 p-8 min-h-screen">
         <header class="flex justify-between items-end mb-10">
@@ -96,11 +102,13 @@
 
 
 
+            @if(Auth::user()->role === 'bendahara')
             <a href="{{ route('bendahara.kas-masuk.create') }}" class="flex items-center gap-2 px-5 py-3 bg-primary text-white rounded-xl font-bold text-sm hover:bg-blue-800 transition-all shadow-md">
 
                 <span class="material-symbols-outlined text-xl">add</span>
                 Tambah Kas Masuk
             </a>
+            @endif
         </header>
 
         @if (session('success'))
@@ -276,7 +284,7 @@
                 const formData = new FormData(filterForm);
                 const params = new URLSearchParams(formData);
 
-                let fetchUrl = `{{ route('bendahara.kas-masuk.index') }}?${params.toString()}&ajax=1`;
+                let fetchUrl = `{{ route(Auth::user()->role === 'bendahara' ? 'bendahara.kas-masuk.index' : (Auth::user()->role === 'pengurus' ? 'pengurus.kas-masuk.index' : 'user.kas-masuk.index')) }}?${params.toString()}&ajax=1`;
                 if (url) {
                     // If a URL is passed (from pagination), attach current filters
                     const urlObj = new URL(url);

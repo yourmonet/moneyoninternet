@@ -137,10 +137,6 @@
         <div class="lg:col-span-2 bg-surface-container-lowest rounded-3xl p-8 shadow-sm border border-outline-variant/30">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-headline font-bold text-on-surface">Transaksi Terbaru</h3>
-                <a href="#" class="text-primary font-bold text-sm hover:text-primary/80 transition-colors flex items-center gap-1 group">
-                    Lihat Semua
-                    <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                </a>
             </div>
             <div class="space-y-3">
                 @forelse ($transaksiTerbaru as $transaksi)
@@ -187,7 +183,7 @@
                 <div class="relative z-10">
                     <h3 class="text-lg font-headline font-extrabold text-on-secondary-container mb-2">Butuh Bantuan?</h3>
                     <p class="text-sm text-on-secondary-container/80 mb-6 font-medium leading-relaxed">Pelajari cara mengelola kas dengan lebih efektif menggunakan sistem MONET.</p>
-                    <a href="#" class="inline-flex items-center gap-2 bg-on-secondary-container text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-on-secondary-container/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+                    <a href="https://cdn-1.yourmonet.web.id/files/manual-book-monet.pdf" class="inline-flex items-center gap-2 bg-on-secondary-container text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-on-secondary-container/90 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
                         <span class="material-symbols-outlined text-lg">menu_book</span>
                         Baca Panduan
                     </a>

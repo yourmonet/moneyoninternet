@@ -42,8 +42,9 @@
 </head>
 <body class="bg-surface font-body text-on-surface">
 
-<nav class="fixed top-0 w-full z-50 bg-gray-50/85 backdrop-blur-md shadow-sm flex justify-between items-center px-8 h-16 font-headline antialiased">
-    <div class="flex items-center gap-8">
+<nav class="fixed top-0 w-full z-50 bg-gray-50/85 backdrop-blur-md shadow-sm flex justify-between items-center px-4 md:px-8 h-16 font-headline antialiased">
+    <div class="flex items-center gap-4 md:gap-8">
+        <button onclick="toggleSidebar()" class="md:hidden mr-2 text-on-surface hover:text-primary transition-colors flex items-center"><span class="material-symbols-outlined text-[28px]">menu</span></button>
         <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="MONET" class="h-8 w-auto object-contain"/>
     </div>
     <div class="flex items-center gap-3">
@@ -76,7 +77,7 @@
     @include('components.sidebar-anggota')
 @endif
 
-<main class="ml-64 pt-20 p-8 min-h-screen flex justify-center">
+<main class="md:ml-64 pt-20 p-4 md:p-8 min-h-screen flex justify-center">
     <div class="w-full max-w-5xl">
         <header class="mb-10">
             <h1 class="text-4xl font-headline font-extrabold tracking-tight text-on-surface">Profil Saya</h1>

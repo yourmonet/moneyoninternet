@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="utf-8"/>
@@ -146,7 +146,7 @@
         <!-- Actions -->
         <div class="flex items-center space-x-4 md:space-x-gutter">
             <a class="hidden md:inline-block text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors duration-200" href="{{ route('login') }}">Masuk</a>
-            <a class="bg-primary text-on-primary font-label-md text-label-md px-6 py-2 rounded-full hover:bg-on-primary-fixed-variant transition-colors duration-200" href="{{ route('register') }}">Daftar</a>
+            <a class="hidden md:inline-block bg-primary text-on-primary font-label-md text-label-md px-6 py-2 rounded-full hover:bg-on-primary-fixed-variant transition-colors duration-200" href="{{ route('register') }}">Daftar</a>
             <!-- Mobile Menu Toggle -->
             <button id="mobile-menu-btn" class="md:hidden flex items-center justify-center text-on-surface hover:text-primary transition-colors">
                 <span class="material-symbols-outlined text-[32px]">menu</span>
@@ -159,8 +159,9 @@
             <a class="{{ request()->routeIs('home') ? 'text-primary' : 'text-on-surface-variant' }} font-label-md text-label-md" href="{{ route('home') }}">Beranda</a>
             <a class="{{ request()->routeIs('about') ? 'text-primary' : 'text-on-surface-variant' }} font-label-md text-label-md" href="{{ route('about') }}">Tentang Kami</a>
             <a class="{{ request()->routeIs('contact') ? 'text-primary font-bold' : 'text-on-surface-variant' }} font-label-md text-label-md" href="{{ route('contact') }}">Kontak</a>
-            <div class="border-t border-outline-variant/30 pt-4">
+            <div class="border-t border-outline-variant/30 pt-4 flex flex-col space-y-4">
                 <a class="block text-on-surface-variant font-label-md text-label-md hover:text-primary" href="{{ route('login') }}">Masuk</a>
+                <a class="block bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-full text-center hover:bg-on-primary-fixed-variant transition-colors duration-200" href="{{ route('register') }}">Daftar</a>
             </div>
         </div>
     </div>
@@ -212,7 +213,7 @@
 <section class="py-16 md:py-32 bg-surface-container-lowest" id="features">
     <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
         <div class="text-center max-w-3xl mx-auto mb-16 md:mb-32" data-aos="fade-up">
-            <h2 class="font-display-lg text-4xl md:text-display-lg text-on-surface mb-stack-md font-light">Mengapa harus MONET?</h2>
+            <h2 class="font-display-lg text-4xl md:text-display-lg text-on-surface mb-stack-md font-bold">Mengapa harus MONET?</h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Kami memiliki fitur unggulan yang dapat digunakan untuk keperluan organisasi Anda.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-32">
@@ -256,7 +257,7 @@
 <section class="py-16 md:py-32 bg-surface" id="team">
     <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
         <div class="mb-16 md:mb-24 text-center" data-aos="fade-up">
-            <h2 class="font-display-lg text-4xl md:text-display-lg text-on-surface mb-stack-md font-light">Tim Kami</h2>
+            <h2 class="font-display-lg text-4xl md:text-display-lg text-on-surface mb-stack-md font-bold">Tim Kami</h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Ini adalah orang-orang dibalik layar MONET.</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-16">
@@ -320,7 +321,7 @@
 <!-- <section class="py-32 bg-surface" id="pricing">
     <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
         <div class="text-center max-w-3xl mx-auto mb-32">
-            <h2 class="font-display-lg text-display-lg text-on-surface mb-stack-md font-light">Investasi yang Rasional</h2>
+            <h2 class="font-display-lg text-display-lg text-on-surface mb-stack-md font-bold">Investasi yang Rasional</h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Struktur harga yang dirancang transparan, terintegrasi mulus dengan pertumbuhan Anda.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto divide-y md:divide-y-0 md:divide-x divide-outline-variant/30">
@@ -361,7 +362,7 @@
 <!-- CTA Section -->
 <section class="py-16 md:py-32 bg-surface text-center border-t border-outline-variant/30">
     <div class="max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop" data-aos="fade-up">
-        <h2 class="font-display-lg text-4xl md:text-display-lg text-on-surface mb-stack-lg font-light">Siap Menggunakan Sistem Informasi Manajemen Keuangan untuk Organisasi Anda?</h2>
+        <h2 class="font-display-lg text-4xl md:text-display-lg text-on-surface mb-stack-lg font-bold">Siap Menggunakan Sistem Informasi Manajemen Keuangan untuk Organisasi Anda?</h2>
         <p class="font-body-lg text-body-lg text-on-surface-variant mb-16 leading-relaxed">Tinggalkan cara lama dan gunakan MONET untuk organisasi Anda.</p>
         <a class="inline-flex justify-center items-center bg-primary text-on-primary font-label-md text-label-md px-12 py-5 rounded-full hover:bg-on-primary-fixed-variant transition-all duration-200" href="{{ route('register') }}">
             Mulai Sekarang

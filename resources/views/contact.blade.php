@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="utf-8"/>
@@ -145,7 +145,7 @@
         <!-- Actions -->
         <div class="flex items-center space-x-4 md:space-x-gutter">
             <a class="hidden md:inline-block text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors duration-200" href="{{ route('login') }}">Masuk</a>
-            <a class="bg-primary text-on-primary font-label-md text-label-md px-6 py-2 rounded-full hover:bg-on-primary-fixed-variant transition-colors duration-200" href="{{ route('register') }}">Daftar</a>
+            <a class="hidden md:inline-block bg-primary text-on-primary font-label-md text-label-md px-6 py-2 rounded-full hover:bg-on-primary-fixed-variant transition-colors duration-200" href="{{ route('register') }}">Daftar</a>
             <!-- Mobile Menu Toggle -->
             <button id="mobile-menu-btn" class="md:hidden flex items-center justify-center text-on-surface hover:text-primary transition-colors">
                 <span class="material-symbols-outlined text-[32px]">menu</span>
@@ -158,8 +158,9 @@
             <a class="{{ request()->routeIs('home') ? 'text-primary' : 'text-on-surface-variant' }} font-label-md text-label-md" href="{{ route('home') }}">Beranda</a>
             <a class="{{ request()->routeIs('about') ? 'text-primary' : 'text-on-surface-variant' }} font-label-md text-label-md" href="{{ route('about') }}">Tentang Kami</a>
             <a class="{{ request()->routeIs('contact') ? 'text-primary font-bold' : 'text-on-surface-variant' }} font-label-md text-label-md" href="{{ route('contact') }}">Kontak</a>
-            <div class="border-t border-outline-variant/30 pt-4">
+            <div class="border-t border-outline-variant/30 pt-4 flex flex-col space-y-4">
                 <a class="block text-on-surface-variant font-label-md text-label-md hover:text-primary" href="{{ route('login') }}">Masuk</a>
+                <a class="block bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-full text-center hover:bg-on-primary-fixed-variant transition-colors duration-200" href="{{ route('register') }}">Daftar</a>
             </div>
         </div>
     </div>
@@ -174,7 +175,7 @@
             <div class="absolute inset-0 bg-primary/70 mix-blend-multiply"></div>
         </div>
         <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
-            <h1 class="font-display-lg text-4xl md:text-display-lg text-white font-light mb-4" data-aos="fade-up">Hubungi Kami</h1>
+            <h1 class="font-display-lg text-4xl md:text-display-lg text-white font-bold mb-4" data-aos="fade-up">Hubungi Kami</h1>
             <p class="font-body-lg text-body-lg text-primary-fixed-dim max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
                 Punya pertanyaan atau masukan? Jangan ragu untuk menghubungi kami.
             </p>

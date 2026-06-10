@@ -66,19 +66,19 @@
 @include('components.sidebar-bendahara')
 
 <main class="md:ml-64 p-4 pt-20 md:p-8 md:pt-20 min-h-screen">
-    <header class="flex justify-between items-end mb-10">
+    <header class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-10">
         <div>
             <h1 class="text-3xl font-headline font-extrabold tracking-tight text-on-surface">Status Pembayaran Kas</h1>
             <p class="text-on-surface-variant font-body mt-1">Pantau status pembayaran kas pengurus dan bendahara.</p>
         </div>
-        <div class="flex items-center gap-3">
-            <form action="{{ route('bendahara.status-pembayaran.reminder-massal') }}" method="POST" onsubmit="return confirm('Kirim email pengingat kepada seluruh anggota yang belum bayar/ditolak?')">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+            <form action="{{ route('bendahara.status-pembayaran.reminder-massal') }}" method="POST" class="w-full sm:w-auto" onsubmit="return confirm('Kirim email pengingat kepada seluruh anggota yang belum bayar/ditolak?')">
                 @csrf
-                <button type="submit" class="bg-secondary text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:bg-secondary/90 transition shadow-sm hover:shadow-md">
+                <button type="submit" class="w-full bg-secondary text-white px-5 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-secondary/90 transition shadow-sm hover:shadow-md">
                     <span class="material-symbols-outlined">campaign</span> Kirim Pengingat Massal
                 </button>
             </form>
-            <button onclick="document.getElementById('modal-generate').classList.remove('hidden')" class="bg-primary text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:bg-primary/90 transition shadow-sm hover:shadow-md">
+            <button onclick="document.getElementById('modal-generate').classList.remove('hidden')" class="w-full sm:w-auto bg-primary text-white px-5 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary/90 transition shadow-sm hover:shadow-md">
                 <span class="material-symbols-outlined">add_task</span> Generate Tagihan Baru
             </button>
         </div>
@@ -308,6 +308,26 @@
     </div>
 </div>
 
+{{-- Logout Modal --}}
+<div id="logout-modal" class="fixed inset-0 z-[150] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="hideLogoutModal()"></div>
+    <div class="bg-surface-container-lowest p-8 rounded-3xl shadow-2xl w-full max-w-sm relative z-10 transform scale-95 transition-transform duration-300">
+        <div class="w-16 h-16 bg-error-container border-4 border-white shadow-sm rounded-full flex items-center justify-center text-error mb-4 mx-auto -mt-12">
+            <span class="material-symbols-outlined text-3xl">logout</span>
+        </div>
+        <h2 class="text-2xl font-headline font-extrabold text-center text-on-surface mb-2">Keluar?</h2>
+        <p class="text-center text-on-surface-variant text-sm mb-8">Anda harus login kembali untuk mengakses dashboard.</p>
+        <div class="flex gap-3">
+            <button onclick="hideLogoutModal()" class="flex-1 py-3 px-4 rounded-xl border border-outline-variant/30 text-on-surface-variant font-bold text-sm hover:bg-surface-container transition-colors">
+                Batal
+            </button>
+            <button onclick="document.getElementById('logout-form').submit()" class="flex-1 py-3 px-4 rounded-xl bg-error text-white font-bold text-sm hover:bg-error/90 shadow-lg shadow-error/20 transition-all">
+                Ya, Keluar
+            </button>
+        </div>
+    </div>
+</div>
+
 {{-- Modal Reject Pembayaran --}}
 <div id="modal-reject" class="fixed inset-0 z-[120] hidden bg-on-surface/50 backdrop-blur-sm flex items-center justify-center">
     <div class="bg-surface-container-lowest rounded-3xl w-full max-w-md mx-4 overflow-hidden shadow-xl transform transition-all">
@@ -370,6 +390,30 @@
 
     function closeRejectModal() {
         document.getElementById('modal-reject').classList.add('hidden');
+    }
+
+    // Logout Modal Logic
+    const logoutModal = document.getElementById('logout-modal');
+    const logoutModalContent = logoutModal ? logoutModal.querySelector('div.bg-surface-container-lowest') : null;
+
+    function showLogoutModal() {
+        if (!logoutModal) return;
+        logoutModal.classList.remove('hidden');
+        setTimeout(() => {
+            logoutModal.classList.remove('opacity-0');
+            logoutModalContent.classList.remove('scale-95');
+            logoutModalContent.classList.add('scale-100');
+        }, 10);
+    }
+
+    function hideLogoutModal() {
+        if (!logoutModal) return;
+        logoutModal.classList.add('opacity-0');
+        logoutModalContent.classList.remove('scale-100');
+        logoutModalContent.classList.add('scale-95');
+        setTimeout(() => {
+            logoutModal.classList.add('hidden');
+        }, 300);
     }
 </script>
 

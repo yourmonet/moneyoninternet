@@ -159,12 +159,7 @@ class StatusPembayaranController extends Controller
             'status' => 'Lunas',
         ]);
 
-        // Kirim email konfirmasi pembayaran berhasil
-        try {
-            Mail::to($pembayaran->user->email)->send(new PembayaranBerhasilMail($pembayaran));
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error("Gagal mengirim email pembayaran berhasil ke {$pembayaran->user->email}: " . $e->getMessage());
-        }
+
 
         return redirect()->back()->with('success', "Pembayaran {$pembayaran->user->name} periode {$pembayaran->periode} berhasil diverifikasi (Lunas).");
     }
@@ -194,12 +189,7 @@ class StatusPembayaranController extends Controller
             'bukti_pembayaran' => null,
         ]);
 
-        // Kirim email penolakan pembayaran
-        try {
-            Mail::to($pembayaran->user->email)->send(new PembayaranDitolakMail($pembayaran));
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error("Gagal mengirim email penolakan pembayaran ke {$pembayaran->user->email}: " . $e->getMessage());
-        }
+
 
         return redirect()->back()->with('success', "Pembayaran {$pembayaran->user->name} periode {$pembayaran->periode} telah ditolak dengan alasan: {$request->alasan_penolakan}.");
     }

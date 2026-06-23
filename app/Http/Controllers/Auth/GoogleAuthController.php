@@ -134,12 +134,18 @@ class GoogleAuthController extends Controller
             return redirect('/user/login')->withErrors(['email' => 'Sesi Google tidak valid. Silakan ulangi proses login.']);
         }
 
-        $request->validate([
+        $role = $googleUserData['role'] ?? 'anggota';
+
+        $rules = [
             'name'     => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        ];
 
-        $role = $googleUserData['role'] ?? 'anggota';
+        if ($role === 'pengurus') {
+            $rules['department'] = ['required', 'string', 'max:255'];
+        }
+
+        $request->validate($rules);
 
         User::create([
             'name'      => $request->name,
@@ -148,6 +154,7 @@ class GoogleAuthController extends Controller
             'avatar'    => $googleUserData['avatar'] ?? null,
             'password'  => Hash::make($request->password),
             'role'      => $role,
+            'department'=> $role === 'pengurus' ? $request->department : null,
         ]);
 
         session()->forget('google_user');

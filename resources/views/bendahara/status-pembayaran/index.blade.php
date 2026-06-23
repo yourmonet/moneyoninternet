@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Status Pembayaran Anggota | MONET</title>
+<title>Status Pembayaran Anggota | {{ app_setting('app_name', 'MONET') }}</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="icon" type="image/png" href="https://cdn-1.yourmonet.web.id/images/monet.png">
+<link rel="icon" type="image/png" href="{{ app_setting('favicon', 'https://cdn-1.yourmonet.web.id/images/monet.png') }}">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -42,7 +42,7 @@
 <nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md shadow-sm flex justify-between items-center px-4 md:px-8 h-16 border-b border-outline-variant/30">
     <div class="flex items-center gap-4 md:gap-8">
         <button onclick="toggleSidebar()" class="md:hidden mr-2 text-on-surface hover:text-primary transition-colors flex items-center"><span class="material-symbols-outlined text-[28px]">menu</span></button>
-        <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="MONET" class="h-8 w-auto object-contain"/>
+        <img src="{{ app_setting('logo_light', 'https://cdn-1.yourmonet.web.id/images/monet2.png') }}" alt="{{ app_setting('app_name', 'MONET') }}" class="h-8 w-auto object-contain"/>
     </div>
     <div class="flex items-center gap-3">
         <div class="hidden sm:block text-right">
@@ -417,5 +417,7 @@
     }
 </script>
 
+
+@include('components.loading')
 </body>
 </html>

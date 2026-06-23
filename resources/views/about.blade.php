@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Tentang Kami - MONET</title>
+    <title>Tentang Kami - {{ app_setting('app_name', 'MONET') }}</title>
     <!-- Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
-    <link rel="icon" type="image/png" href="https://cdn-1.yourmonet.web.id/images/monet.png"/>
+    <link rel="icon" type="image/png" href="{{ app_setting('favicon', 'https://cdn-1.yourmonet.web.id/images/monet.png') }}"/>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <!-- AOS Animation -->
@@ -134,7 +134,7 @@
     <div class="flex justify-between items-center w-full h-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
         <!-- Brand Logo -->
         <a href="/" class="flex items-center">
-            <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="Monet Logo" class="h-8 w-auto object-contain">
+            <img src="{{ app_setting('logo_light', 'https://cdn-1.yourmonet.web.id/images/monet2.png') }}" alt="Monet Logo" class="h-8 w-auto object-contain">
         </a>
         <!-- Navigation Links (Desktop) -->
         <div class="hidden md:flex space-x-margin-desktop">
@@ -180,7 +180,7 @@
         <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
             <h1 class="font-display-lg text-4xl md:text-display-lg text-white font-bold mb-4" data-aos="fade-up">Tentang Kami</h1>
             <p class="font-body-lg text-body-lg text-primary-fixed-dim max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
-                Mengenal lebih dekat tentang MONET dan tim di baliknya.
+                Mengenal lebih dekat tentang {{ app_setting('app_name', 'MONET') }} dan tim di baliknya.
             </p>
         </div>
     </header>
@@ -190,10 +190,10 @@
         <div class="max-w-3xl mx-auto px-margin-mobile md:px-margin-desktop text-center">
             <!-- <h2 class="font-headline-lg text-headline-lg text-on-surface mb-8 font-medium">Visi & Misi Kami</h2> -->
             <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed mb-6" data-aos="fade-up">
-                Money on Internet (MONET) adalah sistem informasi manajemen keuangan yang dirancang secara khusus untuk mengoptimalkan tata kelola dana di dalam sebuah organisasi. Kami hadir sebagai solusi digital atas tantangan administrasi konvensional, berfokus pada efisiensi pencatatan, transparansi arus kas, dan pengarsipan data yang terpusat.
+                Money on Internet ({{ app_setting('app_name', 'MONET') }}) adalah sistem informasi manajemen keuangan yang dirancang secara khusus untuk mengoptimalkan tata kelola dana di dalam sebuah organisasi. Kami hadir sebagai solusi digital atas tantangan administrasi konvensional, berfokus pada efisiensi pencatatan, transparansi arus kas, dan pengarsipan data yang terpusat.
             </p>
             <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed" data-aos="fade-up" data-aos-delay="100">
-                Sebagai platform berbasis cloud, MONET memastikan setiap bukti transaksi dan laporan tercatat dengan presisi, aman, dan dapat dipantau secara real-time sesuai dengan hierarki wewenang pengguna. Tujuan utama sistem ini adalah memfasilitasi organisasi untuk mencapai standar akuntabilitas yang tinggi, sehingga pengurus dapat mengalihkan fokus dari kerumitan administratif menuju pelaksanaan dan inovasi program kerja.
+                Sebagai platform berbasis cloud, {{ app_setting('app_name', 'MONET') }} memastikan setiap bukti transaksi dan laporan tercatat dengan presisi, aman, dan dapat dipantau secara real-time sesuai dengan hierarki wewenang pengguna. Tujuan utama sistem ini adalah memfasilitasi organisasi untuk mencapai standar akuntabilitas yang tinggi, sehingga pengurus dapat mengalihkan fokus dari kerumitan administratif menuju pelaksanaan dan inovasi program kerja.
             </p>
         </div>
     </section>
@@ -203,7 +203,7 @@
         <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
             <div class="mb-16 md:mb-24 text-center" data-aos="fade-up">
                 <h2 class="font-display-lg text-4xl md:text-display-lg text-on-surface mb-stack-md font-bold">Tim Kami</h2>
-                <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Ini adalah orang-orang dibalik layar MONET.</p>
+                <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Ini adalah orang-orang dibalik layar {{ app_setting('app_name', 'MONET') }}.</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-16">
                 <!-- Member 1 -->
@@ -246,7 +246,7 @@
     <section class="py-16 md:py-32 bg-surface text-center border-t border-outline-variant/30">
         <div class="max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop" data-aos="fade-up">
             <h2 class="font-display-lg text-4xl md:text-display-lg text-on-surface mb-stack-lg font-bold">Siap Menggunakan Sistem Informasi Manajemen Keuangan untuk Organisasi Anda?</h2>
-            <p class="font-body-lg text-body-lg text-on-surface-variant mb-16 leading-relaxed">Tinggalkan cara lama dan gunakan MONET untuk organisasi Anda.</p>
+            <p class="font-body-lg text-body-lg text-on-surface-variant mb-16 leading-relaxed">Tinggalkan cara lama dan gunakan {{ app_setting('app_name', 'MONET') }} untuk organisasi Anda.</p>
             <a class="inline-flex justify-center items-center bg-primary text-on-primary font-label-md text-label-md px-12 py-5 rounded-full hover:bg-on-primary-fixed-variant transition-all duration-200" href="{{ route('register') }}">
                 Mulai Sekarang
             </a>
@@ -259,11 +259,11 @@
     <div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-8 max-w-container-max mx-auto gap-4">
         <!-- Brand Logo -->
         <a href="/" class="inline-block">
-            <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="Monet Logo" class="h-8 w-auto object-contain">
+            <img src="{{ app_setting('logo_light', 'https://cdn-1.yourmonet.web.id/images/monet2.png') }}" alt="Monet Logo" class="h-8 w-auto object-contain">
         </a>
         <!-- Copyright Text -->
         <p class="text-body-sm font-body-sm text-on-surface-variant text-center md:text-right">
-            &copy; <script>document.write( new Date().getFullYear() );</script> Money On Internet (MONET). All rights reserved.
+            &copy; <script>document.write( new Date().getFullYear() );</script> Money On Internet ({{ app_setting('app_name', 'MONET') }}). All rights reserved.
         </p>
     </div>
 </footer>

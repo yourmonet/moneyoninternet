@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Register | MONET</title>
-<link rel="icon" type="image/png" href="https://cdn-1.yourmonet.web.id/images/monet.png">
+<title>Register | {{ app_setting('app_name', 'MONET') }}</title>
+<link rel="icon" type="image/png" href="{{ app_setting('favicon', 'https://cdn-1.yourmonet.web.id/images/monet.png') }}">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -46,10 +46,10 @@
     <section class="hidden lg:flex flex-col justify-between p-12 bg-surface-container-low relative overflow-hidden">
         <div class="relative z-10">
             <div class="flex items-center gap-3 mb-12">
-                <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="MONET" class="h-10 w-auto object-contain"/>
+                <img src="{{ app_setting('logo_light', 'https://cdn-1.yourmonet.web.id/images/monet2.png') }}" alt="{{ app_setting('app_name', 'MONET') }}" class="h-10 w-auto object-contain"/>
             </div>
             <h1 class="font-headline text-4xl font-bold text-on-surface leading-tight mb-6">
-                Selamat Datang di <br/><span class="text-primary">MONET!</span>
+                Selamat Datang di <br/><span class="text-primary">{{ app_setting('app_name', 'MONET') }}!</span>
             </h1>
             <p class="text-on-surface-variant max-w-sm leading-relaxed">
                 Platform sistem informasi manajemen keuangan terbaik untuk organisasi Anda.
@@ -61,7 +61,7 @@
     <section class="flex flex-col justify-center p-6 sm:p-8 md:p-12 lg:p-16">
         <div class="w-full max-w-md mx-auto">
             <div class="lg:hidden flex items-center justify-center gap-2 mb-8">
-                <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="MONET" class="h-8 w-auto object-contain"/>
+                <img src="{{ app_setting('logo_light', 'https://cdn-1.yourmonet.web.id/images/monet2.png') }}" alt="{{ app_setting('app_name', 'MONET') }}" class="h-8 w-auto object-contain"/>
                 <span class="font-headline font-bold text-primary text-xl"></span>
             </div>
 
@@ -97,17 +97,7 @@
                     <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
                 </a>
 
-                <!-- Role: Bendahara -->
-                <a href="{{ url('/bendahara/register') }}" class="flex items-center gap-4 p-4 border border-outline-variant/50 rounded-xl hover:border-primary hover:bg-primary-fixed/20 hover:shadow-md active:scale-[0.98] transition-all group">
-                    <div class="w-12 h-12 rounded-full bg-primary-fixed/30 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                        <span class="material-symbols-outlined">account_balance_wallet</span>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-headline font-bold text-on-surface">Bendahara</h3>
-                        <p class="text-xs text-on-surface-variant mt-0.5">Pengelola keuangan organisasi</p>
-                    </div>
-                    <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
-                </a>
+
             </div>
 
             <footer class="mt-10 text-center">

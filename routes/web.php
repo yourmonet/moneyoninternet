@@ -11,21 +11,24 @@ use App\Http\Controllers\MidtransCallbackController;
 use App\Http\Controllers\StatusPembayaranController;
 use App\Http\Controllers\KategoriTransaksiController;
 use App\Http\Controllers\Auth\UniversalAuthController;
+use App\Http\Controllers\Auth\AdminAuthController;
 use Illuminate\Support\Facades\Route;
 // ─────────────────────────────────────────────────────────
 // Landing Page
 // ─────────────────────────────────────────────────────────
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::middleware(\App\Http\Middleware\CheckPublicPages::class)->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('home');
 
-Route::get('/tentang-kami', function () {
-    return view('about');
-})->name('about');
+    Route::get('/tentang-kami', function () {
+        return view('about');
+    })->name('about');
 
-Route::get('/kontak', function () {
-    return view('contact');
-})->name('contact');
+    Route::get('/kontak', function () {
+        return view('contact');
+    })->name('contact');
+});
 
 // Callback Midtrans (Sebaiknya pastikan route ini dikecualikan dari CSRF token)
 Route::post('/midtrans/callback', [MidtransCallbackController::class, 'handleCallback'])->name('midtrans.callback');
@@ -36,9 +39,13 @@ Route::post('/midtrans/callback-keluar', [MidtransCallbackController::class, 'ha
 // ─────────────────────────────────────────────────────────
 Route::prefix('user')->name('user.')->group(function () {
 
-    // Public: login & register
+    // Public: login & register & check-nim
     Route::get('login',    [AnggotaAuthController::class, 'showLogin'])->name('login');
     Route::post('login',   [AnggotaAuthController::class, 'login']);
+    
+    Route::get('check-nim', [AnggotaAuthController::class, 'showCheckNim'])->name('check-nim');
+    Route::post('check-nim', [AnggotaAuthController::class, 'processCheckNim'])->name('process-check-nim');
+    
     Route::get('register', [AnggotaAuthController::class, 'showRegister'])->name('register');
     Route::post('register',[AnggotaAuthController::class, 'register']);
 
@@ -88,11 +95,9 @@ Route::prefix('pengurus')->name('pengurus.')->group(function () {
 // ─────────────────────────────────────────────────────────
 Route::prefix('bendahara')->name('bendahara.')->group(function () {
 
-    // Public: login & register
+    // Public: login
     Route::get('login',    [BendaharaAuthController::class, 'showLogin'])->name('login');
     Route::post('login',   [BendaharaAuthController::class, 'login']);
-    Route::get('register', [BendaharaAuthController::class, 'showRegister'])->name('register');
-    Route::post('register',[BendaharaAuthController::class, 'register']);
 
     // Protected: dashboard & logout (hanya untuk role bendahara)
     Route::middleware(['role:bendahara', 'verified'])->group(function () {
@@ -128,6 +133,48 @@ Route::prefix('bendahara')->name('bendahara.')->group(function () {
 });
 
 // ─────────────────────────────────────────────────────────
+// ADMIN — prefix: /admin
+// ─────────────────────────────────────────────────────────
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('login', [AdminAuthController::class, 'showLogin'])->name('login');
+    Route::post('login', [AdminAuthController::class, 'login']);
+
+    Route::middleware(['role:admin', 'verified'])->group(function () {
+        Route::get('dashboard', [AdminAuthController::class, 'dashboard'])->name('dashboard');
+        Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
+        
+        // Data Mahasiswa management
+        Route::get('mahasiswa', [\App\Http\Controllers\Admin\DataMahasiswaController::class, 'index'])->name('mahasiswa.index');
+        Route::post('mahasiswa', [\App\Http\Controllers\Admin\DataMahasiswaController::class, 'store'])->name('mahasiswa.store');
+        Route::put('mahasiswa/{id}', [\App\Http\Controllers\Admin\DataMahasiswaController::class, 'update'])->name('mahasiswa.update');
+        Route::delete('mahasiswa/{id}', [\App\Http\Controllers\Admin\DataMahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+        
+        // Bendahara management
+        Route::get('bendahara', [AdminAuthController::class, 'manajemenBendahara'])->name('bendahara.index');
+        Route::post('bendahara', [AdminAuthController::class, 'storeBendahara'])->name('bendahara.store');
+        Route::delete('bendahara/{id}', [AdminAuthController::class, 'destroyBendahara'])->name('bendahara.destroy');
+        
+        // Pengurus management
+        Route::get('pengurus', [AdminAuthController::class, 'manajemenPengurus'])->name('pengurus.index');
+        Route::post('pengurus', [AdminAuthController::class, 'storePengurus'])->name('pengurus.store');
+        Route::delete('pengurus/{id}', [AdminAuthController::class, 'destroyPengurus'])->name('pengurus.destroy');
+        // Persetujuan Akun
+        Route::get('akun/persetujuan', [AdminAuthController::class, 'persetujuanAkun'])->name('akun.persetujuan');
+        Route::post('akun/{id}/approve', [AdminAuthController::class, 'approveAkun'])->name('akun.approve');
+        Route::post('akun/{id}/reject', [AdminAuthController::class, 'rejectAkun'])->name('akun.reject');
+        
+        // Anggota/Mahasiswa management
+        Route::get('anggota', [AdminAuthController::class, 'manajemenAnggota'])->name('anggota.index');
+        Route::post('anggota', [AdminAuthController::class, 'storeAnggota'])->name('anggota.store');
+        Route::delete('anggota/{id}', [AdminAuthController::class, 'destroyAnggota'])->name('anggota.destroy');
+
+        // Web Settings
+        Route::get('settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
+        Route::post('settings', [\App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
+    });
+});
+
+// ─────────────────────────────────────────────────────────
 // GOOGLE OAUTH
 // ─────────────────────────────────────────────────────────
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'handleCallback'])->name('auth.google.callback');
@@ -137,7 +184,15 @@ Route::get('/auth/google/{role}',   [GoogleAuthController::class, 'redirectToGoo
 
 require __DIR__.'/auth.php';
 
-Route::get('/login', [UniversalAuthController::class, 'showLogin'])->name('login');
+Route::get('/onboarding', function () {
+    return view('onboarding');
+})->name('onboarding')->middleware(\App\Http\Middleware\EnsureOnboardingCompleted::class);
+
+Route::post('/onboarding/complete', function () {
+    return redirect()->route('login')->cookie(cookie()->forever('onboarding_completed', true));
+})->name('onboarding.complete');
+
+Route::get('/login', [UniversalAuthController::class, 'showLogin'])->name('login')->middleware(\App\Http\Middleware\EnsureOnboardingCompleted::class);
 Route::post('/login', [UniversalAuthController::class, 'login']);
 
 Route::get('/register', function () {

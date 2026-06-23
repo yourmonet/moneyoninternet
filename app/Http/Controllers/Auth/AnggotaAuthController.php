@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,20 @@ class AnggotaAuthController extends Controller
                 ])->withInput($request->except('password'));
             }
 
+            if ($user->account_status === 'waiting') {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Akun Anda sedang menunggu persetujuan Admin.',
+                ])->withInput($request->except('password'));
+            }
+
+            if ($user->account_status === 'rejected') {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Pendaftaran akun Anda ditolak oleh Admin.',
+                ])->withInput($request->except('password'));
+            }
+
             $request->session()->regenerate();
             return redirect('/user/dashboard');
         }
@@ -53,6 +68,51 @@ class AnggotaAuthController extends Controller
         ])->withInput($request->except('password'));
     }
 
+    // ─────────────────── CHECK NIM ───────────────────
+
+    public function showCheckNim(): View|RedirectResponse
+    {
+        if (Auth::check() && Auth::user()->role === 'anggota') {
+            return redirect('/user/dashboard');
+        }
+        return view('user.check-nim');
+    }
+
+    public function processCheckNim(Request $request)
+    {
+        $request->validate([
+            'nim' => ['required', 'string', 'max:50'],
+        ]);
+
+        $student = Student::where('nim', $request->nim)->first();
+
+        if (!$student) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false, 
+                    'message' => 'NIM tidak terdaftar di sistem. Anda bukan Mahasiswa PSTI UPI.'
+                ], 422);
+            }
+            return back()->withErrors([
+                'nim' => 'NIM tidak terdaftar di sistem. Anda bukan Mahasiswa PSTI UPI.',
+            ])->withInput();
+        }
+
+        // Simpan NIM dan nama ke session untuk digunakan di form register
+        session()->put('verified_nim', $student->nim);
+        session()->put('verified_name', $student->name);
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true, 
+                'message' => 'NIM terdaftar di sistem dan Anda adalah Mahasiswa PSTI UPI. Mengalihkan ke pendaftaran...', 
+                'redirect' => route('user.register')
+            ]);
+        }
+
+        return redirect()->route('user.register');
+    }
+
     // ─────────────────── REGISTER ───────────────────
 
     public function showRegister(): View|RedirectResponse
@@ -60,6 +120,11 @@ class AnggotaAuthController extends Controller
         if (Auth::check() && Auth::user()->role === 'anggota') {
             return redirect('/user/dashboard');
         }
+
+        if (!session()->has('verified_nim')) {
+            return redirect()->route('user.check-nim');
+        }
+
         return view('user.register');
     }
 
@@ -74,13 +139,17 @@ class AnggotaAuthController extends Controller
         $code = sprintf("%06d", mt_rand(1, 999999));
 
         session()->put('pending_registration', [
-            'name' => $request->name,
+            'name' => session('verified_name', $request->name), // Gunakan nama dari sistem jika ada
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'anggota',
+            'account_status' => 'waiting', // Anggota baru harus nunggu approve admin
             'verification_code' => $code,
             'verification_code_expires_at' => now()->addMinutes(15),
         ]);
+
+        // Bersihkan session nim setelah sukses register step (opsional, bisa dibersihkan setelah verify)
+        // session()->forget(['verified_nim', 'verified_name']);
 
         Mail::to($request->email)->send(new VerifyEmailCode($code));
 

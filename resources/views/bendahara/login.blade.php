@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Login | Bendahara - MONET</title>
-<link rel="icon" type="image/png" href="https://cdn-1.yourmonet.web.id/images/monet.png">
+<title>Login | Bendahara - {{ app_setting('app_name', 'MONET') }}</title>
+<link rel="icon" type="image/png" href="{{ app_setting('favicon', 'https://cdn-1.yourmonet.web.id/images/monet.png') }}">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -45,7 +45,7 @@
     <section class="hidden lg:flex flex-col justify-between p-12 bg-surface-container-low relative overflow-hidden">
         <div class="relative z-10">
             <div class="flex items-center gap-3 mb-12">
-                <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="MONET" class="h-10 w-auto object-contain"/>
+                <img src="{{ app_setting('logo_light', 'https://cdn-1.yourmonet.web.id/images/monet2.png') }}" alt="{{ app_setting('app_name', 'MONET') }}" class="h-10 w-auto object-contain"/>
             </div>
             <h1 class="font-headline text-4xl font-bold text-on-surface leading-tight mb-6">
                 Selamat Datang <br/><span class="text-primary">Bendahara!</span>
@@ -61,7 +61,7 @@
     <section class="flex flex-col justify-center p-8 md:p-16">
         <div class="w-full max-w-md mx-auto">
             <div class="lg:hidden flex items-center gap-2 mb-8">
-                <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="MONET" class="h-8 w-auto object-contain"/>
+                <img src="{{ app_setting('logo_light', 'https://cdn-1.yourmonet.web.id/images/monet2.png') }}" alt="{{ app_setting('app_name', 'MONET') }}" class="h-8 w-auto object-contain"/>
             </div>
 
             <header class="mb-8">
@@ -163,8 +163,7 @@
 
             <footer class="mt-8 text-center">
                 <p class="text-sm text-on-surface-variant">
-                    Belum punya akun bendahara?
-                    <a class="font-bold text-primary hover:underline underline-offset-4 ml-1" href="/bendahara/register">Buat akun</a> sekarang!
+                    Belum punya akun bendahara? Silahkan hubungi Admin!                
                 </p>
             </footer>
         </div>
@@ -197,5 +196,7 @@
         }
     }
 </script>
+
+@include('components.loading')
 </body>
 </html>

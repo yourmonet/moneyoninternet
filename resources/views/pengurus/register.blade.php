@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Daftar | Pengurus - MONET</title>
-<link rel="icon" type="image/png" href="https://cdn-1.yourmonet.web.id/images/monet.png">
+<title>Daftar | Pengurus - {{ app_setting('app_name', 'MONET') }}</title>
+<link rel="icon" type="image/png" href="{{ app_setting('favicon', 'https://cdn-1.yourmonet.web.id/images/monet.png') }}">
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -47,7 +47,7 @@
     <div class="hidden lg:flex lg:w-7/12 relative overflow-hidden bg-primary items-center justify-center">
         <div class="relative z-10 px-16 max-w-2xl">
             <div class="mb-8 flex items-center gap-3">
-                <img src="https://cdn-1.yourmonet.web.id/images/monet-2.png" alt="MONET" class="h-10 w-auto object-contain"/>
+                <img src="{{ app_setting('logo_dark', 'https://cdn-1.yourmonet.web.id/images/monet-2.png') }}" alt="{{ app_setting('app_name', 'MONET') }}" class="h-10 w-auto object-contain"/>
             </div>
             <h2 class="text-5xl font-headline font-bold text-on-primary leading-tight mb-6">
                 Halo Pengurus!
@@ -63,7 +63,7 @@
         <div class="max-w-md w-full mx-auto py-12 my-auto">
 
             <div class="lg:hidden mb-12 flex items-center gap-3">
-                <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="MONET" class="h-8 w-auto object-contain"/>
+                <img src="{{ app_setting('logo_light', 'https://cdn-1.yourmonet.web.id/images/monet2.png') }}" alt="{{ app_setting('app_name', 'MONET') }}" class="h-8 w-auto object-contain"/>
                 <span class="text-xl font-headline font-black text-primary"></span>
             </div>
 
@@ -101,6 +101,15 @@
                         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">mail</span>
                         <input class="w-full pl-10 pr-4 py-3 bg-surface-container-lowest border border-outline-variant/20 rounded-xl focus:ring-4 focus:ring-primary-fixed focus:border-primary focus:outline-none transition-all placeholder:text-outline/50 @error('email') border-error @enderror"
                             id="email" name="email" placeholder="nama@email.com" value="{{ old('email') }}" required autocomplete="username" type="email"/>
+                    </div>
+                </div>
+
+                <div class="space-y-1.5">
+                    <label class="block text-sm font-semibold text-on-surface-variant" for="department">Asal Departemen/Badan/Komisi</label>
+                    <div class="relative group">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">domain</span>
+                        <input class="w-full pl-10 pr-4 py-3 bg-surface-container-lowest border border-outline-variant/20 rounded-xl focus:ring-4 focus:ring-primary-fixed focus:border-primary focus:outline-none transition-all placeholder:text-outline/50 @error('department') border-error @enderror"
+                            id="department" name="department" placeholder="Contoh: Departemen Media & Komunikasi" value="{{ old('department') }}" required type="text"/>
                     </div>
                 </div>
 
@@ -186,5 +195,7 @@
         }
     }
 </script>
+
+@include('components.loading')
 </body>
 </html>

@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>MONEY ON INTERNET - MONET</title>
+    <title>MONEY ON INTERNET - {{ app_setting('app_name', 'MONET') }}</title>
     <!-- Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
-    <link rel="icon" type="image/png" href="https://cdn-1.yourmonet.web.id/images/monet.png">
+    <link rel="icon" type="image/png" href="{{ app_setting('favicon', 'https://cdn-1.yourmonet.web.id/images/monet.png') }}">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <!-- AOS Animation -->
@@ -134,7 +134,7 @@
     <div class="flex justify-between items-center w-full h-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
         <!-- Brand Logo -->
         <a href="/" class="flex items-center">
-            <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="Monet Logo" class="h-8 w-auto object-contain">
+            <img src="{{ app_setting('logo_light', 'https://cdn-1.yourmonet.web.id/images/monet2.png') }}" alt="Monet Logo" class="h-8 w-auto object-contain">
         </a>
         <!-- Navigation Links (Desktop) -->
         <div class="hidden md:flex space-x-margin-desktop">
@@ -179,10 +179,10 @@
 
     <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop relative z-10 flex flex-col items-center text-center">
         <h1 data-aos="fade-up" class="font-display-lg text-4xl md:text-display-lg text-white font-bold leading-tight mb-8">
-            Kelola keuangan lebih cerdas dengan <br/><span class="text-blue-400 font-extrabold drop-shadow-md">MONET.</span>
+            Kelola keuangan lebih cerdas dengan <br/><span class="text-blue-400 font-extrabold drop-shadow-md">{{ app_setting('app_name', 'MONET') }}.</span>
         </h1>
         <p data-aos="fade-up" data-aos-delay="100" class="font-body-lg text-body-lg text-gray-200 max-w-2xl leading-relaxed mb-10">
-            MONET adalah sistem informasi manajemen keuangan terbaik untuk organisasi Anda yang mengutamakan transparansi dan kemudahan.
+            {{ app_setting('app_name', 'MONET') }} adalah sistem informasi manajemen keuangan terbaik untuk organisasi Anda yang mengutamakan transparansi dan kemudahan.
         </p>
         <div data-aos="fade-up" data-aos-delay="200" class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
             <a class="inline-flex justify-center items-center bg-primary text-white font-label-md text-label-md px-10 py-4 rounded-full hover:bg-blue-800 transition-all duration-300 shadow-lg shadow-primary/30" href="{{ route('register') }}">
@@ -213,7 +213,7 @@
 <section class="py-16 md:py-32 bg-surface-container-lowest" id="features">
     <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
         <div class="text-center max-w-3xl mx-auto mb-16 md:mb-32" data-aos="fade-up">
-            <h2 class="font-display-lg text-4xl md:text-display-lg text-on-surface mb-stack-md font-bold">Mengapa harus MONET?</h2>
+            <h2 class="font-display-lg text-4xl md:text-display-lg text-on-surface mb-stack-md font-bold">Mengapa harus {{ app_setting('app_name', 'MONET') }}?</h2>
             <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Kami memiliki fitur unggulan yang dapat digunakan untuk keperluan organisasi Anda.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-32">
@@ -258,7 +258,7 @@
     <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
         <div class="mb-16 md:mb-24 text-center" data-aos="fade-up">
             <h2 class="font-display-lg text-4xl md:text-display-lg text-on-surface mb-stack-md font-bold">Tim Kami</h2>
-            <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Ini adalah orang-orang dibalik layar MONET.</p>
+            <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Ini adalah orang-orang dibalik layar {{ app_setting('app_name', 'MONET') }}.</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-16">
             <!-- Member 1 -->
@@ -286,7 +286,7 @@
                 </div>
                 <h3 class="font-headline-md text-headline-md text-on-surface mb-1">Aldy Alfiansyah</h3>
                 <p class="font-body-md text-body-md text-primary font-medium mb-3">Developer 1</p>
-                <!-- <p class="font-body-sm text-body-sm text-on-surface-variant">Merancang antarmuka pengguna yang intuitif dan profesional untuk sistem MONET.</p> -->
+                <!-- <p class="font-body-sm text-body-sm text-on-surface-variant">Merancang antarmuka pengguna yang intuitif dan profesional untuk sistem {{ app_setting('app_name', 'MONET') }}.</p> -->
             </div>
             <!-- Member 4 -->
             <div class="flex flex-col items-center text-center" data-aos="fade-up" data-aos-delay="400">
@@ -363,7 +363,7 @@
 <section class="py-16 md:py-32 bg-surface text-center border-t border-outline-variant/30">
     <div class="max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop" data-aos="fade-up">
         <h2 class="font-display-lg text-4xl md:text-display-lg text-on-surface mb-stack-lg font-bold">Siap Menggunakan Sistem Informasi Manajemen Keuangan untuk Organisasi Anda?</h2>
-        <p class="font-body-lg text-body-lg text-on-surface-variant mb-16 leading-relaxed">Tinggalkan cara lama dan gunakan MONET untuk organisasi Anda.</p>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mb-16 leading-relaxed">Tinggalkan cara lama dan gunakan {{ app_setting('app_name', 'MONET') }} untuk organisasi Anda.</p>
         <a class="inline-flex justify-center items-center bg-primary text-on-primary font-label-md text-label-md px-12 py-5 rounded-full hover:bg-on-primary-fixed-variant transition-all duration-200" href="{{ route('register') }}">
             Mulai Sekarang
         </a>
@@ -375,11 +375,11 @@
     <div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-8 max-w-container-max mx-auto gap-4">
         <!-- Brand Logo -->
         <a href="/" class="inline-block">
-            <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="Monet Logo" class="h-8 w-auto object-contain">
+            <img src="{{ app_setting('logo_light', 'https://cdn-1.yourmonet.web.id/images/monet2.png') }}" alt="Monet Logo" class="h-8 w-auto object-contain">
         </a>
         <!-- Copyright Text -->
         <p class="text-body-sm font-body-sm text-on-surface-variant text-center md:text-right">
-            &copy; <script>document.write( new Date().getFullYear() );</script> Money On Internet (MONET). All rights reserved.
+            &copy; <script>document.write( new Date().getFullYear() );</script> Money On Internet ({{ app_setting('app_name', 'MONET') }}). All rights reserved.
         </p>
     </div>
 </footer>

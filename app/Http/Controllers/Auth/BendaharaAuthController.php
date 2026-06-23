@@ -54,38 +54,7 @@ class BendaharaAuthController extends Controller
     }
 
     // ─────────────────── REGISTER ───────────────────
-
-    public function showRegister(): View|RedirectResponse
-    {
-        if (Auth::check() && Auth::user()->role === 'bendahara') {
-            return redirect('/bendahara/dashboard');
-        }
-        return view('bendahara.register');
-    }
-
-    public function register(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name'     => ['required', 'string', 'max:255'],
-            'email'    => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-
-        $code = sprintf("%06d", mt_rand(1, 999999));
-
-        session()->put('pending_registration', [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'bendahara',
-            'verification_code' => $code,
-            'verification_code_expires_at' => now()->addMinutes(15),
-        ]);
-
-        Mail::to($request->email)->send(new VerifyEmailCode($code));
-
-        return redirect()->route('verification.notice');
-    }
+    // Registrasi bendahara dihapus, admin yang membuat akun.
 
     // ─────────────────── DASHBOARD ───────────────────
 

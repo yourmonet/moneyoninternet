@@ -10,7 +10,7 @@
         <!-- Header -->
         <tr>
             <td align="center" style="background-color: #ba1a1a; padding: 40px 20px;">
-                <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px;">MONET</h1>
+                <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px;">{{ app_setting('app_name', 'MONET') }}</h1>
                 <p style="color: #ffdad6; margin: 5px 0 0 0; font-size: 14px; font-weight: 500;">Sistem Keuangan Organisasi</p>
             </td>
         </tr>
@@ -56,8 +56,8 @@
         <!-- Footer -->
         <tr>
             <td align="center" style="background-color: #edeef0; padding: 24px; font-size: 12px; color: #737685;">
-                <p style="margin: 0;">Email ini dikirim secara otomatis oleh platform MONET.</p>
-                <p style="margin: 5px 0 0 0;">&copy; 2026 MONET. All rights reserved.</p>
+                <p style="margin: 0;">Email ini dikirim secara otomatis oleh platform {{ app_setting('app_name', 'MONET') }}.</p>
+                <p style="margin: 5px 0 0 0;">&copy; 2026 {{ app_setting('app_name', 'MONET') }}. All rights reserved.</p>
             </td>
         </tr>
     </table>

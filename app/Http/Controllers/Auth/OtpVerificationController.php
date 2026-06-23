@@ -45,6 +45,7 @@ class OtpVerificationController extends Controller
             'email' => $pending['email'],
             'password' => $pending['password'],
             'role' => $pending['role'],
+            'account_status' => $pending['account_status'] ?? 'active',
             'email_verified_at' => now(),
             'verification_code' => null,
             'verification_code_expires_at' => null,

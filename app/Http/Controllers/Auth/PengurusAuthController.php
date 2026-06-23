@@ -44,6 +44,20 @@ class PengurusAuthController extends Controller
                 ])->withInput($request->except('password'));
             }
 
+            if ($user->account_status === 'waiting') {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Akun Anda sedang menunggu persetujuan Admin.',
+                ])->withInput($request->except('password'));
+            }
+
+            if ($user->account_status === 'rejected') {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Pendaftaran akun Anda ditolak oleh Admin.',
+                ])->withInput($request->except('password'));
+            }
+
             $request->session()->regenerate();
             return redirect('/pengurus/dashboard');
         }
@@ -66,9 +80,10 @@ class PengurusAuthController extends Controller
     public function register(Request $request): RedirectResponse
     {
         $request->validate([
-            'name'     => ['required', 'string', 'max:255'],
-            'email'    => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'name'       => ['required', 'string', 'max:255'],
+            'email'      => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'department' => ['required', 'string', 'max:255'],
+            'password'   => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $code = sprintf("%06d", mt_rand(1, 999999));
@@ -76,8 +91,10 @@ class PengurusAuthController extends Controller
         session()->put('pending_registration', [
             'name' => $request->name,
             'email' => $request->email,
+            'department' => $request->department,
             'password' => Hash::make($request->password),
             'role' => 'pengurus',
+            'account_status' => 'waiting',
             'verification_code' => $code,
             'verification_code_expires_at' => now()->addMinutes(15),
         ]);

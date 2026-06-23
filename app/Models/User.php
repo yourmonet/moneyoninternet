@@ -26,7 +26,9 @@ class User extends Authenticatable
         'role',
         'avatar',
         'phone_number',
+        'department',
         'status_kepatuhan_kas',
+        'account_status',
         'verification_code',
         'verification_code_expires_at',
     ];
@@ -46,11 +48,22 @@ class User extends Authenticatable
         return $this->role === 'bendahara';
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isWaitingApproval(): bool
+    {
+        return $this->account_status === 'waiting';
+    }
+
     public function getDashboardRoute(): string
     {
         return match($this->role) {
             'pengurus'  => '/pengurus/dashboard',
             'bendahara' => '/bendahara/dashboard',
+            'admin'     => '/admin/dashboard',
             default     => '/user/dashboard',
         };
     }

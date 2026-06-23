@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Laporan Keuangan {{ $namaBulan }}</title>
-    <link rel="shortcut icon" href="https://cdn-1.yourmonet.web.id/images/monet.png" type="png">
+    <link rel="shortcut icon" href="{{ app_setting('favicon', 'https://cdn-1.yourmonet.web.id/images/monet.png') }}" type="png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         @page {
@@ -215,7 +215,7 @@
 <footer>
     <table class="footer-table">
         <tr>
-            <td style="width: 50%;">MONET - Sistem Manajemen Keuangan</td>
+            <td style="width: 50%;">{{ app_setting('app_name', 'MONET') }} - Sistem Manajemen Keuangan</td>
             <td style="width: 50%; text-align: right;">Dicetak pada {{ \Carbon\Carbon::now()->translatedFormat('d M Y, H:i') }} | Hal. <span class="page-number"></span></td>
         </tr>
     </table>
@@ -225,7 +225,7 @@
     <table class="header-table">
         <tr>
             <td style="width: 50%;">
-                <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="Logo" style="height: 35px; vertical-align: middle;">
+                <img src="{{ app_setting('logo_light', 'https://cdn-1.yourmonet.web.id/images/monet2.png') }}" alt="Logo" style="height: 35px; vertical-align: middle;">
             </td>
             <td style="width: 50%;">
                 <div class="report-title">Laporan Keuangan</div>
@@ -300,5 +300,7 @@
     </tbody>
 </table>
 
+
+@include('components.loading')
 </body>
 </html>

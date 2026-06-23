@@ -142,7 +142,9 @@
     </table>
 
     <div class="footer">
-        Dokumen ini digenerate secara otomatis oleh Platform MONET.
+        Dokumen ini digenerate secara otomatis oleh Platform {{ app_setting('app_name', 'MONET') }}.
     </div>
+
+@include('components.loading')
 </body>
 </html>

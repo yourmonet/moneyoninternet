@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Kontak - MONET</title>
+    <title>Kontak - {{ app_setting('app_name', 'MONET') }}</title>
     <!-- Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
-    <link rel="icon" type="image/png" href="https://cdn-1.yourmonet.web.id/images/monet.png">
+    <link rel="icon" type="image/png" href="{{ app_setting('favicon', 'https://cdn-1.yourmonet.web.id/images/monet.png') }}">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <!-- AOS Animation -->
@@ -134,7 +134,7 @@
     <div class="flex justify-between items-center w-full h-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
         <!-- Brand Logo -->
         <a href="/" class="flex items-center">
-            <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="Monet Logo" class="h-8 w-auto object-contain">
+            <img src="{{ app_setting('logo_light', 'https://cdn-1.yourmonet.web.id/images/monet2.png') }}" alt="Monet Logo" class="h-8 w-auto object-contain">
         </a>
         <!-- Navigation Links (Desktop) -->
         <div class="hidden md:flex space-x-margin-desktop">
@@ -190,7 +190,7 @@
                 <div data-aos="fade-right">
                     <h2 class="font-headline-lg text-headline-lg text-on-surface mb-8 font-medium">Informasi Kontak</h2>
                     <p class="font-body-lg text-body-lg text-on-surface-variant mb-12">
-                        Tim dukungan kami selalu siap membantu Anda dengan pertanyaan apa pun mengenai MONET. Silakan isi form di samping atau hubungi kami melalui kontak di bawah ini.
+                        Tim dukungan kami selalu siap membantu Anda dengan pertanyaan apa pun mengenai {{ app_setting('app_name', 'MONET') }}. Silakan isi form di samping atau hubungi kami melalui kontak di bawah ini.
                     </p>
                     <div class="space-y-8">
                         <div class="flex items-start">
@@ -251,11 +251,11 @@
     <div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-8 max-w-container-max mx-auto gap-4">
         <!-- Brand Logo -->
         <a href="/" class="inline-block">
-            <img src="https://cdn-1.yourmonet.web.id/images/monet2.png" alt="Monet Logo" class="h-8 w-auto object-contain">
+            <img src="{{ app_setting('logo_light', 'https://cdn-1.yourmonet.web.id/images/monet2.png') }}" alt="Monet Logo" class="h-8 w-auto object-contain">
         </a>
         <!-- Copyright Text -->
         <p class="text-body-sm font-body-sm text-on-surface-variant text-center md:text-right">
-            &copy; <script>document.write( new Date().getFullYear() );</script> Money On Internet (MONET). All rights reserved.
+            &copy; <script>document.write( new Date().getFullYear() );</script> Money On Internet ({{ app_setting('app_name', 'MONET') }}). All rights reserved.
         </p>
     </div>
 </footer>

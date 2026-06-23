@@ -26,7 +26,7 @@
                 <table width="100%" style="background-color: #edeef0; border-radius: 16px; margin: 24px 0; padding: 20px; border-collapse: collapse;">
                     <tr>
                         <td style="font-size: 13px; font-weight: bold; color: #737685; padding-bottom: 8px;" width="40%">Organisasi</td>
-                        <td style="font-size: 14px; font-weight: bold; color: #191c1e; padding-bottom: 8px;">MONET</td>
+                        <td style="font-size: 14px; font-weight: bold; color: #191c1e; padding-bottom: 8px;">{{ app_setting('app_name', 'MONET') }}</td>
                     </tr>
                     <tr>
                         <td style="font-size: 13px; font-weight: bold; color: #737685; padding-bottom: 8px;">Periode</td>
@@ -64,8 +64,8 @@
         <!-- Footer -->
         <tr>
             <td align="center" style="background-color: #edeef0; padding: 24px; font-size: 12px; color: #737685;">
-                <p style="margin: 0;">Email ini dikirim secara otomatis oleh platform MONET.</p>
-                <p style="margin: 5px 0 0 0;">&copy; 2026 MONET. All rights reserved.</p>
+                <p style="margin: 0;">Email ini dikirim secara otomatis oleh platform {{ app_setting('app_name', 'MONET') }}.</p>
+                <p style="margin: 5px 0 0 0;">&copy; 2026 {{ app_setting('app_name', 'MONET') }}. All rights reserved.</p>
             </td>
         </tr>
     </table>

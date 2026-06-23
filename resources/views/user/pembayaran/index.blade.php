@@ -51,7 +51,7 @@
     @if(Auth::user()->avatar)
         @php
             $av = Auth::user()->avatar;
-            $avatarUrl = (str_starts_with($av, 'http://') || str_starts_with($av, 'https://')) ? $av : '/storage/' . $av;
+            $avatarUrl = (str_starts_with($av, 'data:image') || str_starts_with($av, 'http://') || str_starts_with($av, 'https://')) ? $av : '/storage/' . $av;
         @endphp
         <div class="hidden sm:block text-right">
             <div class="text-sm font-black text-blue-900 leading-tight">{{ Auth::user()->name }}</div>

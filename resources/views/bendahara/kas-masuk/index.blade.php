@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="light" lang="id">
 
 <head>
@@ -71,7 +71,7 @@
             @if(Auth::user()->avatar)
             @php
             $avatarUrl = Auth::user()->avatar;
-            $avatarSrc = (str_starts_with($avatarUrl, 'http://') || str_starts_with($avatarUrl, 'https://')) ? $avatarUrl : asset('storage/' . $avatarUrl);
+            $avatarSrc = (str_starts_with($avatarUrl, 'data:image') || str_starts_with($avatarUrl, 'http://') || str_starts_with($avatarUrl, 'https://')) ? $avatarUrl : asset('storage/' . $avatarUrl);
             @endphp
             <img src="{{ $avatarSrc }}" class="w-10 h-10 rounded-full object-cover border border-outline-variant/30 shadow-sm" alt="Avatar" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="w-10 h-10 rounded-full bg-primary text-white text-sm font-bold shadow-sm" style="display:none; align-items:center; justify-content:center;">
@@ -175,49 +175,13 @@
                     </thead>
                     <tbody class="divide-y divide-outline-variant/20">
                         @include('bendahara.kas-masuk._rows')
-
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-left border-collapse">
-                                    <thead>
-                                        <tr class="bg-gray-50 text-gray-600 font-headline text-sm uppercase tracking-wider border-b border-gray-200">
-                                            <th class="px-6 py-4 font-bold">Tanggal</th>
-                                            <th class="px-6 py-4 font-bold">Keterangan</th>
-                                            <th class="px-6 py-4 font-bold">Kategori</th>
-                                            <th class="px-6 py-4 font-bold">Sumber</th>
-                                            <th class="px-6 py-4 font-bold text-right">Jumlah</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-gray-100">
-                                        @forelse($kasMasuk as $km)
-                                        <tr class="hover:bg-gray-50/50 transition-colors">
-                                            <td class="px-6 py-4 text-sm font-medium">{{ \Carbon\Carbon::parse($km->tanggal)->translatedFormat('d F Y') }}</td>
-                                            <td class="px-6 py-4 text-sm">{{ $km->keterangan }}</td>
-                                            <td class="px-6 py-4 text-sm font-bold text-blue-900">
-                                                {{ $km->kategori ? $km->kategori->nama_kategori : 'Tanpa Kategori' }}
-                                            </td>
-                                            <td class="px-6 py-4 text-sm capitalize">
-                                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold">
-                                                    {{ $km->sumber }}
-                                                </span>
-                                            </td>
-                                            <td class="px-6 py-4 text-sm font-bold text-right text-green-600">
-                                                Rp {{ number_format($km->jumlah, 0, ',', '.') }}
-                                            </td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td colspan="5" class="px-6 py-8 text-center text-gray-400 text-sm">Belum ada data kas masuk.</td>
-                                        </tr>
-                                        @endforelse
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div id="pagination-container" class="px-6 py-4 border-t border-outline-variant/30">
-                                {{ $kasMasuk->appends(request()->query())->links() }}
-                            </div>
-                        </div>
+                    </tbody>
+                </table>
+            </div>
+            <div id="pagination-container" class="px-6 py-4 border-t border-outline-variant/30">
+                {{ $kasMasuk->appends(request()->query())->links() }}
+            </div>
+        </div>
     </main>
 
     {{-- Logout Modal --}}

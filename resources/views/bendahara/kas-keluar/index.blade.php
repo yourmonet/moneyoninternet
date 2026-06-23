@@ -54,7 +54,7 @@
         @if(Auth::user()->avatar)
             @php
                 $avatarUrl = Auth::user()->avatar;
-                $avatarSrc = (str_starts_with($avatarUrl, 'http://') || str_starts_with($avatarUrl, 'https://')) ? $avatarUrl : asset('storage/' . $avatarUrl);
+                $avatarSrc = (str_starts_with($avatarUrl, 'data:image') || str_starts_with($avatarUrl, 'http://') || str_starts_with($avatarUrl, 'https://')) ? $avatarUrl : asset('storage/' . $avatarUrl);
             @endphp
             <img src="{{ $avatarSrc }}" class="w-10 h-10 rounded-full object-cover border border-outline-variant/30 shadow-sm" alt="Avatar" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="w-10 h-10 rounded-full bg-primary text-white text-sm font-bold shadow-sm" style="display:none; align-items:center; justify-content:center;">

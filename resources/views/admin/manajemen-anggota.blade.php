@@ -109,7 +109,7 @@
                                     @if($a->avatar)
                                         @php
                                             $av = $a->avatar;
-                                            $avatarUrl = (str_starts_with($av, 'http://') || str_starts_with($av, 'https://')) ? $av : '/storage/' . $av;
+                                            $avatarUrl = (str_starts_with($av, 'data:image') || str_starts_with($av, 'http://') || str_starts_with($av, 'https://')) ? $av : '/storage/' . $av;
                                         @endphp
                                         <img src="{{ $avatarUrl }}" alt="{{ $a->name }}" class="w-10 h-10 rounded-full object-cover shadow-sm shrink-0" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                         <div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container font-bold text-lg shrink-0" style="display:none; align-items:center; justify-content:center;">

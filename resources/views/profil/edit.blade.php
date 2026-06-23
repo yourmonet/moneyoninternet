@@ -55,7 +55,7 @@
         @if(Auth::user()->avatar)
             @php
                 $av = Auth::user()->avatar;
-                $avatarUrl = (str_starts_with($av, 'http://') || str_starts_with($av, 'https://')) ? $av : '/storage/' . $av;
+                $avatarUrl = (str_starts_with($av, 'data:image') || str_starts_with($av, 'http://') || str_starts_with($av, 'https://')) ? $av : '/storage/' . $av;
             @endphp
             <img src="{{ $avatarUrl }}" class="w-10 h-10 rounded-full object-cover shadow-sm" alt="Profile" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="w-10 h-10 rounded-full object-cover shadow-sm bg-surface-container-high border border-outline-variant/30 text-on-surface-variant font-bold" style="display:none; align-items:center; justify-content:center;">
@@ -79,9 +79,15 @@
 
 <main class="md:ml-64 p-4 pt-20 md:p-8 md:pt-24 min-h-screen flex justify-center">
     <div class="w-full max-w-5xl">
-        <header class="mb-10">
-            <h1 class="text-4xl font-headline font-extrabold tracking-tight text-on-surface">Profil Saya</h1>
-            <p class="text-on-surface-variant font-body mt-1">Kelola data personal dan pengaturan akun Anda.</p>
+        <header class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <h1 class="text-4xl font-headline font-extrabold tracking-tight text-on-surface">Profil Saya</h1>
+                <p class="text-on-surface-variant font-body mt-1">Kelola data personal dan pengaturan akun Anda.</p>
+            </div>
+            <div class="flex items-center gap-2 text-sm text-on-surface-variant font-semibold bg-surface-container-high px-4 py-2 rounded-xl border border-outline-variant/30">
+                <span class="material-symbols-outlined text-outline text-[18px]">calendar_month</span>
+                Bergabung pada {{ Auth::user()->created_at->format('d-m-y') }}
+            </div>
         </header>
 
         @if (session('success'))
@@ -105,9 +111,9 @@
             </div>
         @endif
         
-        <div class="flex flex-col lg:flex-row gap-8">
+        <div class="w-full">
             <!-- Form Area -->
-            <div class="flex-1 bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-8">
+            <div class="w-full bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-8">
                 @php
                     $updateRoute = 'bendahara.profil.update';
                     if (Auth::user()->role === 'pengurus') $updateRoute = 'pengurus.profil.update';
@@ -121,7 +127,7 @@
                     <div class="flex flex-col items-center gap-4 border-b border-outline-variant/30 pb-8">
                         <div class="relative group">
                             @if(Auth::user()->avatar)
-                                @php $avatarUrl = Str::startsWith(Auth::user()->avatar, ['http://', 'https://']) ? Auth::user()->avatar : Storage::url(Auth::user()->avatar); @endphp
+                                @php $avatarUrl = Str::startsWith(Auth::user()->avatar, ['data:image', 'http://', 'https://']) ? Auth::user()->avatar : Storage::url(Auth::user()->avatar); @endphp
                                 <img src="{{ $avatarUrl }}" id="avatar-preview" class="w-32 h-32 rounded-full object-cover border-4 border-primary-fixed shadow-md">
                             @else
                                 <div id="avatar-preview" class="w-32 h-32 rounded-full bg-surface-container-highest border-4 border-primary-fixed shadow-md flex items-center justify-center text-4xl font-bold text-on-surface-variant">
@@ -207,38 +213,6 @@
                         </button>
                     </div>
                 </form>
-            </div>
-
-            <!-- Status Area -->
-            <div class="w-full lg:w-72 flex flex-col gap-6">
-                <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-6">
-                    <h3 class="text-lg font-headline font-bold text-on-surface mb-4">Status Anda</h3>
-                    <div class="flex flex-col gap-3">
-                        @php
-                            $roles = [
-                                'Bendahara' => ['value' => 'bendahara', 'bg' => 'bg-blue-100', 'text' => 'text-blue-800', 'icon' => 'account_balance'],
-                                'Pengurus' => ['value' => 'pengurus', 'bg' => 'bg-emerald-100', 'text' => 'text-emerald-800', 'icon' => 'manage_accounts'],
-                                'Anggota' => ['value' => 'anggota', 'bg' => 'bg-purple-100', 'text' => 'text-purple-800', 'icon' => 'person']
-                            ];
-                        @endphp
-
-                        @foreach($roles as $label => $data)
-                            <div class="flex items-center gap-3 px-4 py-3 rounded-xl border border-outline-variant/20 transition-all 
-                                {{ Auth::user()->role === $data['value'] ? $data['bg'] . ' ring-2 ring-offset-1 ring-primary/30 border-transparent shadow-sm' : 'bg-surface-container opacity-60' }}">
-                                <span class="material-symbols-outlined {{ Auth::user()->role === $data['value'] ? $data['text'] : 'text-outline' }}">{{ $data['icon'] }}</span>
-                                <span class="font-bold text-sm {{ Auth::user()->role === $data['value'] ? $data['text'] : 'text-on-surface-variant' }}">{{ $label }}</span>
-                                @if(Auth::user()->role === $data['value'])
-                                    <span class="material-symbols-outlined text-sm ml-auto {{ $data['text'] }}">check_circle</span>
-                                @endif
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="mt-6 p-4 bg-surface-container rounded-xl">
-                        <p class="text-xs text-on-surface-variant text-center leading-relaxed">
-                            Role Anda menentukan hak akses pada sistem {{ app_setting('app_name', 'MONET') }}. Hubungi administrator jika terdapat ketidaksesuaian role.
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

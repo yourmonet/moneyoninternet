@@ -56,7 +56,7 @@
             @if(str_contains(Auth::user()->avatar, 'http'))
                 <img src="{{ Auth::user()->avatar }}" alt="Profil" class="w-10 h-10 rounded-full object-cover shadow-sm">
             @else
-                <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Profil" class="w-10 h-10 rounded-full object-cover shadow-sm">
+                <img src="{{ (str_starts_with(Auth::user()->avatar, 'data:image') || str_starts_with(Auth::user()->avatar, 'http') ? Auth::user()->avatar : asset('storage/' . Auth::user()->avatar)) }}" alt="Profil" class="w-10 h-10 rounded-full object-cover shadow-sm">
             @endif
         @else
             <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold shadow-sm">

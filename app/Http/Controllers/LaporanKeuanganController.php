@@ -56,7 +56,8 @@ class LaporanKeuanganController extends Controller
         $tahunTersedia = collect();
         $oldestMasuk   = KasMasuk::min('tanggal');
         $oldestKeluar  = KasKeluar::min('tanggal');
-        $oldest        = min(array_filter([$oldestMasuk, $oldestKeluar]));
+        $validDates    = array_filter([$oldestMasuk, $oldestKeluar]);
+        $oldest        = !empty($validDates) ? min($validDates) : null;
         $tahunAwal     = $oldest ? Carbon::parse($oldest)->year : Carbon::now()->year;
         for ($y = $tahunAwal; $y <= Carbon::now()->year; $y++) {
             $tahunTersedia->push($y);

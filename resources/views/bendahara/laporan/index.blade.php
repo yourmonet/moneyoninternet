@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="light" lang="id">
 <head>
 <meta charset="utf-8"/>
@@ -63,7 +63,7 @@
         @if(Auth::user()->avatar)
             @php
                 $av = Auth::user()->avatar;
-                $avatarUrl = (str_starts_with($av, 'http://') || str_starts_with($av, 'https://')) ? $av : '/storage/' . $av;
+                $avatarUrl = (str_starts_with($av, 'data:image') || str_starts_with($av, 'http://') || str_starts_with($av, 'https://')) ? $av : '/storage/' . $av;
             @endphp
             <img src="{{ $avatarUrl }}" class="w-10 h-10 rounded-full object-cover shadow-sm" alt="Profile" referrerpolicy="no-referrer" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold shadow-sm" style="display:none;">
@@ -410,6 +410,129 @@
             modal.classList.add('hidden');
         }, 300);
     }
+</script>
+
+{{-- Download Progress Modal --}}
+<div id="download-modal" class="fixed inset-0 z-[110] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="bg-surface-container-lowest p-8 rounded-3xl shadow-2xl w-full max-w-sm relative z-10 transform scale-95 transition-transform duration-300 flex flex-col items-center text-center">
+        <div class="w-16 h-16 bg-primary-container rounded-full flex items-center justify-center mb-6 shadow-inner relative overflow-hidden">
+             <div class="absolute inset-0 bg-primary/20 animate-pulse"></div>
+             <span id="download-icon" class="material-symbols-outlined text-primary text-3xl relative z-10">cloud_download</span>
+        </div>
+        <h3 id="download-title" class="text-xl font-headline font-bold text-on-surface mb-2">Menyiapkan Laporan...</h3>
+        <p id="download-subtitle" class="text-sm text-on-surface-variant mb-6">Mohon tunggu, sistem sedang men-generate data laporan Anda.</p>
+        
+        <div class="w-full bg-surface-variant rounded-full h-3 mb-2 overflow-hidden shadow-inner">
+            <div id="download-progress-bar" class="bg-primary h-3 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
+        </div>
+        <p id="download-progress-text" class="text-sm font-bold text-primary">0%</p>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('a[href*="pdf"], a[href*="excel"]').forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const url = this.href;
+            const isPdf = url.includes('pdf');
+            
+            const modal = document.getElementById('download-modal');
+            const modalContent = modal.querySelector('div.bg-surface-container-lowest');
+            const title = document.getElementById('download-title');
+            const icon = document.getElementById('download-icon');
+            const progressBar = document.getElementById('download-progress-bar');
+            const progressText = document.getElementById('download-progress-text');
+            
+            icon.textContent = isPdf ? 'picture_as_pdf' : 'table_view';
+            icon.className = `material-symbols-outlined text-3xl relative z-10 ${isPdf ? 'text-red-600' : 'text-emerald-600'}`;
+            icon.parentElement.className = `w-16 h-16 rounded-full flex items-center justify-center mb-6 shadow-inner relative overflow-hidden ${isPdf ? 'bg-red-100' : 'bg-emerald-100'}`;
+            
+            title.textContent = `Menyiapkan ${isPdf ? 'PDF' : 'Excel'}...`;
+            title.classList.remove('text-error');
+            progressBar.style.width = '0%';
+            progressBar.className = `h-3 rounded-full transition-all duration-300 ease-out ${isPdf ? 'bg-red-500' : 'bg-emerald-500'}`;
+            progressText.textContent = '0%';
+            progressText.className = `text-sm font-bold ${isPdf ? 'text-red-600' : 'text-emerald-600'}`;
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+
+            // Simulasi progress loading
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                if (progress < 90) {
+                    progress += Math.floor(Math.random() * 8) + 2;
+                    if (progress > 90) progress = 90;
+                    progressBar.style.width = `${progress}%`;
+                    progressText.textContent = `${progress}%`;
+                }
+            }, 300);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+                
+                if (!response.ok) throw new Error('Gagal mengunduh');
+
+                const blob = await response.blob();
+                
+                // Finish progress
+                clearInterval(progressInterval);
+                progressBar.style.width = '100%';
+                progressText.textContent = '100%';
+                title.textContent = 'Selesai!';
+
+                // Trigger download
+                const downloadUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                
+                let filename = isPdf ? 'Laporan.pdf' : 'Laporan.xlsx';
+                const disposition = response.headers.get('content-disposition');
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                    const matches = filenameRegex.exec(disposition);
+                    if (matches != null && matches[1]) { 
+                        filename = matches[1].replace(/['"]/g, '');
+                    }
+                }
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(downloadUrl);
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+
+            } catch (error) {
+                clearInterval(progressInterval);
+                title.textContent = 'Gagal Mengunduh';
+                title.classList.add('text-error');
+                progressBar.classList.replace('bg-red-500', 'bg-error');
+                progressBar.classList.replace('bg-emerald-500', 'bg-error');
+                progressText.textContent = 'Error';
+                progressText.className = 'text-sm font-bold text-error';
+                
+                setTimeout(() => {
+                    const modal = document.getElementById('download-modal');
+                    const modalContent = modal.querySelector('div.bg-surface-container-lowest');
+                    modal.classList.add('opacity-0');
+                    modalContent.classList.remove('scale-100');
+                    modalContent.classList.add('scale-95');
+                    setTimeout(() => { modal.classList.add('hidden'); }, 300);
+                }, 3000);
+            }
+        });
+    });
 </script>
 
 @include('components.loading')
